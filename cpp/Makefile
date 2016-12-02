@@ -1,6 +1,6 @@
 CC=g++
-CFLAGS=-c -Wall -I lib -g -ggdb -O0
-LDFLAGS=
+CFLAGS=-c -Wall -I lib -g -ggdb -O0 -ferror-limit=0
+LDFLAGS=-I /usr/local/include
 OUTDIR=bin/linux
 SOURCES=\
 demo/source/Classification.cpp\
@@ -15,6 +15,7 @@ demo/source/CommandLineParser.cpp\
 demo/source/dibCodec.cpp\
 demo/source/main.cpp\
 demo/source/StatisticsAggregators.cpp\
+demo/source/GaussianAggregator.cpp\
 demo/source/CumulativeNormalDistribution.cpp\
 demo/source/FeatureResponseFunctions.cpp\
 demo/source/PlotCanvas.cpp\

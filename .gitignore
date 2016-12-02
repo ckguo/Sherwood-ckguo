@@ -1,2 +1,6 @@
 cpp/bin/*
 csharp/bin/*
+*.o
+.cproject
+.project
+cpp/.metadata/

@@ -25,18 +25,18 @@
 
 namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 {
-  class RegressionGaussianTrainingContext : public ITrainingContext<AxisAlignedFeatureResponse, GaussianAggregatorNd>
+  class RegressionGaussianNdTrainingContext : public ITrainingContext<AxisAlignedFeatureResponse, GaussianAggregatorNd>
   {
   public:
     // Implementation of ITrainingContext
 	  AxisAlignedFeatureResponse GetRandomFeature(Random& random)
     {
-      return AxisAlignedFeatureResponse(0);
+      return AxisAlignedFeatureResponse(random.Next()%3);
     }
 
     GaussianAggregatorNd GetStatisticsAggregator()
     {
-      return GaussianAggregatorNd(2, 1, 1);
+      return GaussianAggregatorNd(4, 1, 1);
     }
 
     double ComputeInformationGain(const GaussianAggregatorNd& allStatistics, const GaussianAggregatorNd& leftStatistics, const GaussianAggregatorNd& rightStatistics)
@@ -59,7 +59,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     }
   };
 
-  class RegressionGaussianExample
+  class RegressionGaussianExampleNd
   {
   public:
     static const PixelBgr DensityColor;
@@ -76,7 +76,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
       Random random;
 
-      RegressionGaussianTrainingContext regressionTrainingContext;
+      RegressionGaussianNdTrainingContext regressionTrainingContext;
 
       std::auto_ptr<Forest<AxisAlignedFeatureResponse, GaussianAggregatorNd> > forest
         = ForestTrainer<AxisAlignedFeatureResponse, GaussianAggregatorNd>::TrainForest(
@@ -94,37 +94,15 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       // Generate some test samples in a grid pattern (a useful basis for creating visualization images)
       PlotCanvas plotCanvas(trainingData.GetRange(0), trainingData.GetTargetRange(), PlotSize, PlotDilation);
 
-      std::auto_ptr<DataPointCollection> testData = DataPointCollection::Generate1dGrid(plotCanvas.plotRangeX, PlotSize.Width);
+      float[3] bottom = {0, 0, 0};
+      float[3] top = {0, 0 0};
+      std::auto_ptr<DataPointCollection> testData = DataPointCollection::GenerateNdGrid(3, bottom, top, 1);
 
       std::cout << "\nApplying the forest to test data..." << std::endl;
 
       std::vector<std::vector<int> > leafNodeIndices;
       forest.Apply(*testData.get(), leafNodeIndices);
       std::cout << "graphing" << std::endl;
-      // Generate visualization image
-      std::auto_ptr<Bitmap<PixelBgr> > result = std::auto_ptr<Bitmap<PixelBgr> >(new Bitmap<PixelBgr> (PlotSize.Width, PlotSize.Height));
-
-      // Plot the learned density
-      PixelBgr inverseDensityColor = PixelBgr::FromArgb(255 - DensityColor.R, 255 - DensityColor.G, 255 - DensityColor.B);
-
-      std::vector<double> mean_y_given_x(PlotSize.Width);
-
-      int index = 0;
-      for (int i = 0; i < PlotSize.Width; i++)
-      {
-//    	std::cout << "i = " << i << " plotSize width = " << PlotSize.Width << std::endl;
-
-        double totalProbability = 0.0;
-        for (int j = 0; j < PlotSize.Height; j++)
-        {
-
-//          std::cout << "j = " << j << " plotSize height = " << PlotSize.Height << std::endl;
-
-          // Map pixel coordinate (i,j) in visualization image back to point in input space
-          float x = plotCanvas.plotRangeX.first + i * plotCanvas.stepX;
-          float y = plotCanvas.plotRangeY.first + j * plotCanvas.stepY;
-
-          double probability = 0.0;
 
           // Aggregate statistics for this sample over all trees
           for (int t = 0; t < forest.TreeCount(); t++)
@@ -140,8 +118,8 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
             const GaussianAggregatorNd& leafStatistics = leafNodeCopy.TrainingDataStatistics;
 
 //            std::cout << "got stats" << std::endl;
-            Eigen::VectorXd v(2);
-            v << x, y;
+            Eigen::VectorXd v(4);
+            v << 0.2, 0.7, 0.3, 1.2;
 //            std::cout << "got v" << std::endl;
 
             probability += leafStatistics.GetPdf().GetProbability(v);
@@ -152,58 +130,9 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
           }
 
           probability /= forest.TreeCount();
-
-          mean_y_given_x[i] += probability * y;
-          totalProbability += probability;
-
-          float scale = 10.0f * (float)probability;
-
-          PixelBgr weightedColor = PixelBgr::FromArgb(
-            (unsigned char)(std::min(scale * inverseDensityColor.R + 0.5f, 255.0f)),
-            (unsigned char)(std::min(scale * inverseDensityColor.G + 0.5f, 255.0f)),
-            (unsigned char)(std::min(scale * inverseDensityColor.B + 0.5f, 255.0f)));
-
-          PixelBgr c = PixelBgr::FromArgb(255 - weightedColor.R, 255 - weightedColor.G, 255 - weightedColor.G);
-
-          result->SetPixel(i, j, c);
+          std::cout << "prob" << probabilitiy << std::endl;
 
           index++;
         }
-
-        // NB We don't really compute the mean over y, just over the region of y that is plotted
-        mean_y_given_x[i] /= totalProbability;
-      }
-
-      std::cout << "here 1" << std::cout;
-
-      // Also plot the mean curve and the original training data
-      Graphics<PixelBgr> g(result->GetBuffer(), result->GetWidth(), result->GetHeight(), result->GetStride());
-
-      for (int i = 0; i < PlotSize.Width-1; i++)
-      {
-        g.DrawLine(
-          MeanColor,
-          (float)(i),
-          (float)((mean_y_given_x[i] - plotCanvas.plotRangeY.first)/plotCanvas.stepY),
-          (float)(i+1),
-          (float)((mean_y_given_x[i+1] - plotCanvas.plotRangeY.first)/plotCanvas.stepY));
-      }
-
-      std::cout << "here 2" << std::cout;
-
-      for (unsigned int s = 0; s < trainingData.Count(); s++)
-      {
-        // Map sample coordinate back to a pixel coordinate in the visualization image
-        PointF x(
-          (trainingData.GetDataPoint(s)[0] - plotCanvas.plotRangeX.first) / plotCanvas.stepX,
-          (trainingData.GetTarget(s) - plotCanvas.plotRangeY.first) / plotCanvas.stepY);
-
-        RectangleF rectangle(x.X - 2.0f, x.Y - 2.0f, 4.0f, 4.0f);
-        g.FillRectangle(DataPointColor, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-        g.DrawRectangle(DataPointBorderColor, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-      }
-      std::cout << "print result" << std::endl;
-      return result;
-    }
-  };
+  }
 } } }

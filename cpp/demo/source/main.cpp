@@ -21,6 +21,8 @@
 #include "SemiSupervisedClassification.h"
 #include "Regression.h"
 #include "RegressionGaussian.h"
+#include "StatisticsAggregators.h"
+#include "RegressionGaussianNd.h"
 
 using namespace MicrosoftResearch::Cambridge::Sherwood;
 
@@ -346,20 +348,20 @@ int main(int argc, char* argv[])
     std::auto_ptr<DataPointCollection> trainingData = std::auto_ptr<DataPointCollection>(LoadTrainingData(
       trainingDataPath.Value,
       REGRESSION_DATA_PATH + "/" + trainingDataPath.Value,
-      1,
+      3,
       DataDescriptor::HasTargetValues ) );
 
     if (trainingData.get()==0)
       return 0; // LoadTrainingData() generates its own progress/error messages
 
-    std::auto_ptr<Forest<AxisAlignedFeatureResponse, GaussianAggregator2d> > forest = RegressionGaussianExample::Train(
+    std::auto_ptr<Forest<AxisAlignedFeatureResponse, GaussianAggregatorNd> > forest = RegressionGaussianExampleNd::Train(
       *trainingData.get(), parameters);
 
 //	std::auto_ptr<Forest<AxisAlignedFeatureResponse, LinearFitAggregator1d> > forest = RegressionExample::Train(
 //	  *trainingData.get(), parameters);
 
     PointF plotDilation(plotPaddingX.Value, plotPaddingY.Value);
-    std::auto_ptr<Bitmap<PixelBgr> > result = RegressionGaussianExample::Visualize(*forest.get(), *trainingData.get(), Size(300,300), plotDilation);
+    std::auto_ptr<Bitmap<PixelBgr> > result = RegressionGaussianExampleNd::Visualize(*forest.get(), *trainingData.get(), Size(300,300), plotDilation);
 //	std::auto_ptr<Bitmap<PixelBgr> > result = RegressionExample::Visualize(*forest.get(), *trainingData.get(), Size(300,300), plotDilation);
 
     std::cout << "\nSaving output image to result.dib" << std::endl;

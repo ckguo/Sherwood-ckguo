@@ -40,7 +40,6 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     result->dimension_ = dataDimension;
 
     unsigned int elementsPerLine = (bHasClassLabels ? 1 : 0) + dataDimension + (bHasTargetValues ? 1 : 0);
-
     std::string line;
     while (r.good())
     {
@@ -152,6 +151,22 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     return result;
   }
 
+  std::auto_ptr<DataPointCollection> DataPointCollection::GenerateNdGrid(int dim, float range1[], float range2[], int nSteps)
+  {
+
+    std::auto_ptr<DataPointCollection> result =  std::auto_ptr<DataPointCollection>(new DataPointCollection());
+
+    result->dimension_ = dim;
+
+    for (int j = 0; j < dim; j++) {
+    	float step = (range2[j] - range1[j]) / nSteps;
+
+        for (int i = 0; i < nSteps; i++)
+          result->data_.push_back(range1[j] + i * step);
+    }
+
+    return result;
+  }
 
   /// <summary>
   /// Get the data range in the specified data dimension.

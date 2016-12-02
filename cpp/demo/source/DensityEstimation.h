@@ -2,7 +2,7 @@
 
 // This file defines types used to illustrate the use of the decision forest
 // library in a simple 2D density estimation task.
-
+//TODO: add support for GaussianNd
 #include <math.h>
 
 #include <iostream>

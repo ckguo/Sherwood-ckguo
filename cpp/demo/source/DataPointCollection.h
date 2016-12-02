@@ -78,6 +78,9 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     /// <returns>A new DataPointCollection</returns>
     static std::auto_ptr<DataPointCollection> Generate1dGrid(std::pair<float, float> range, int nSteps);
 
+
+    static std::auto_ptr<DataPointCollection> GenerateNdGrid(int dim, float range1[], float range2[], int nSteps);
+
     /// <summary>
     /// Do these data have class labels?
     /// </summary>

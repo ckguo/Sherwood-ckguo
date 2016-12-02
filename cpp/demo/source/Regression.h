@@ -30,7 +30,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     // Implementation of ITrainingContext
     AxisAlignedFeatureResponse GetRandomFeature(Random& random)
     {
-      return AxisAlignedFeatureResponse(0); // not actually random because only one feature possible  in 1D
+      return AxisAlignedFeatureResponse(0); // not actually random because only one feature possible in 1D
     }
 
     LinearFitAggregator1d GetStatisticsAggregator()

@@ -4,3 +4,6 @@ csharp/bin/*
 .cproject
 .project
 cpp/.metadata/
+*.dib
+cpp/.cproject
+cpp/.settings/language.settings.xml

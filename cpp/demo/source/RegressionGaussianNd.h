@@ -21,7 +21,7 @@
 #include "DataPointCollection.h"
 #include "FeatureResponseFunctions.h"
 #include "GaussianAggregator.h"
-#include "RegressionGaussian.h"
+#include "RegressionGaussianNd.h"
 
 namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 {
@@ -91,48 +91,119 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       Size PlotSize,
       PointF PlotDilation )
     {
-      // Generate some test samples in a grid pattern (a useful basis for creating visualization images)
-      PlotCanvas plotCanvas(trainingData.GetRange(0), trainingData.GetTargetRange(), PlotSize, PlotDilation);
+	// Generate some test samples in a grid pattern (a useful basis for creating visualization images)
+		  PlotCanvas plotCanvas(trainingData.GetRange(0), trainingData.GetTargetRange(), PlotSize, PlotDilation);
 
-      float[3] bottom = {0, 0, 0};
-      float[3] top = {0, 0 0};
-      std::auto_ptr<DataPointCollection> testData = DataPointCollection::GenerateNdGrid(3, bottom, top, 1);
+		  std::auto_ptr<DataPointCollection> testData = DataPointCollection::GenerateNdGrid(plotCanvas.plotRangeX, PlotSize.Width);
 
-      std::cout << "\nApplying the forest to test data..." << std::endl;
+		  std::cout << "\nApplying the forest to test data..." << std::endl;
 
-      std::vector<std::vector<int> > leafNodeIndices;
-      forest.Apply(*testData.get(), leafNodeIndices);
-      std::cout << "graphing" << std::endl;
+		  std::vector<std::vector<int> > leafNodeIndices;
+		  forest.Apply(*testData.get(), leafNodeIndices);
+		  std::cout << "graphing" << std::endl;
+		  // Generate visualization image
+		  std::auto_ptr<Bitmap<PixelBgr> > result = std::auto_ptr<Bitmap<PixelBgr> >(new Bitmap<PixelBgr> (PlotSize.Width, PlotSize.Height));
 
-          // Aggregate statistics for this sample over all trees
-          for (int t = 0; t < forest.TreeCount(); t++)
-          {
+		  // Plot the learned density
+		  PixelBgr inverseDensityColor = PixelBgr::FromArgb(255 - DensityColor.R, 255 - DensityColor.G, 255 - DensityColor.B);
 
-//          	std::cout << "t = " << t << " tree count = " << forest.TreeCount() << std::endl;
+		  std::vector<double> mean_y_given_x(PlotSize.Width);
+
+		  int index = 0;
+		  for (int i = 0; i < PlotSize.Width; i++)
+		  {
+	//    	std::cout << "i = " << i << " plotSize width = " << PlotSize.Width << std::endl;
+
+			double totalProbability = 0.0;
+			for (int j = 0; j < PlotSize.Height; j++)
+			{
+
+	//          std::cout << "j = " << j << " plotSize height = " << PlotSize.Height << std::endl;
+
+			  // Map pixel coordinate (i,j) in visualization image back to point in input space
+			  float x = plotCanvas.plotRangeX.first + i * plotCanvas.stepX;
+			  float y = plotCanvas.plotRangeY.first + j * plotCanvas.stepY;
+
+			  double probability = 0.0;
+
+			  // Aggregate statistics for this sample over all trees
+			  for (int t = 0; t < forest.TreeCount(); t++)
+			  {
+
+	//          	std::cout << "t = " << t << " tree count = " << forest.TreeCount() << std::endl;
 
 
-            Node<AxisAlignedFeatureResponse, GaussianAggregatorNd> leafNodeCopy = forest.GetTree((t)).GetNode(leafNodeIndices[t][i]);
+				Node<AxisAlignedFeatureResponse, GaussianAggregatorNd> leafNodeCopy = forest.GetTree((t)).GetNode(leafNodeIndices[t][i]);
 
-//            std::cout << "got node" << std::endl;
+	//            std::cout << "got node" << std::endl;
 
-            const GaussianAggregatorNd& leafStatistics = leafNodeCopy.TrainingDataStatistics;
+				const GaussianAggregatorNd& leafStatistics = leafNodeCopy.TrainingDataStatistics;
 
-//            std::cout << "got stats" << std::endl;
-            Eigen::VectorXd v(4);
-            v << 0.2, 0.7, 0.3, 1.2;
-//            std::cout << "got v" << std::endl;
+	//            std::cout << "got stats" << std::endl;
+				Eigen::VectorXd v(4);
+				v << x, y, 0.5, 1.5;
+	//            std::cout << "got v" << std::endl;
 
-            probability += leafStatistics.GetPdf().GetProbability(v);
+				probability += leafStatistics.GetPdf().GetProbability(v);
 
-//            std::cout << "got probabilitiy" << std::endl;
+	//            std::cout << "got probabilitiy" << std::endl;
 
 
-          }
+			  }
 
-          probability /= forest.TreeCount();
-          std::cout << "prob" << probabilitiy << std::endl;
+			  probability /= forest.TreeCount();
 
-          index++;
-        }
-  }
+			  mean_y_given_x[i] += probability * y;
+			  totalProbability += probability;
+
+			  float scale = 10.0f * (float)probability;
+
+			  PixelBgr weightedColor = PixelBgr::FromArgb(
+				(unsigned char)(std::min(scale * inverseDensityColor.R + 0.5f, 255.0f)),
+				(unsigned char)(std::min(scale * inverseDensityColor.G + 0.5f, 255.0f)),
+				(unsigned char)(std::min(scale * inverseDensityColor.B + 0.5f, 255.0f)));
+
+			  PixelBgr c = PixelBgr::FromArgb(255 - weightedColor.R, 255 - weightedColor.G, 255 - weightedColor.G);
+
+			  result->SetPixel(i, j, c);
+
+			  index++;
+			}
+
+			// NB We don't really compute the mean over y, just over the region of y that is plotted
+			mean_y_given_x[i] /= totalProbability;
+		  }
+
+		  std::cout << "here 1" << std::cout;
+
+		  // Also plot the mean curve and the original training data
+		  Graphics<PixelBgr> g(result->GetBuffer(), result->GetWidth(), result->GetHeight(), result->GetStride());
+
+		  for (int i = 0; i < PlotSize.Width-1; i++)
+		  {
+			g.DrawLine(
+			  MeanColor,
+			  (float)(i),
+			  (float)((mean_y_given_x[i] - plotCanvas.plotRangeY.first)/plotCanvas.stepY),
+			  (float)(i+1),
+			  (float)((mean_y_given_x[i+1] - plotCanvas.plotRangeY.first)/plotCanvas.stepY));
+		  }
+
+		  std::cout << "here 2" << std::cout;
+
+		  for (unsigned int s = 0; s < trainingData.Count(); s++)
+		  {
+			// Map sample coordinate back to a pixel coordinate in the visualization image
+			PointF x(
+			  (trainingData.GetDataPoint(s)[0] - plotCanvas.plotRangeX.first) / plotCanvas.stepX,
+			  (trainingData.GetTarget(s) - plotCanvas.plotRangeY.first) / plotCanvas.stepY);
+
+			RectangleF rectangle(x.X - 2.0f, x.Y - 2.0f, 4.0f, 4.0f);
+			g.FillRectangle(DataPointColor, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+			g.DrawRectangle(DataPointBorderColor, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+		  }
+		  std::cout << "print result" << std::endl;
+		  return result;
+    }
+  };
 } } }

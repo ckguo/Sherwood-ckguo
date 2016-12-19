@@ -7,6 +7,7 @@ demo/source/Classification.cpp\
 demo/source/DataPointCollection.cpp\
 demo/source/Regression.cpp\
 demo/source/RegressionGaussian.cpp\
+demo/source/RegressionGaussianNd.cpp\
 demo/source/SemiSupervisedClassification.cpp\
 demo/source/DensityEstimation.cpp\
 demo/source/FloydWarshall.cpp\

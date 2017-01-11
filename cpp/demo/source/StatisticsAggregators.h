@@ -246,8 +246,8 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       const DataPointCollection& concreteData = (const DataPointCollection&)(data);
 
       const float* datum = concreteData.GetDataPoint((int)index);
-      float target = concreteData.GetTarget((int)index);
-      std::cout << concreteData.GetDataPoint((int)index)[0] << " " << concreteData.GetTarget((int)index) << std::endl;
+      float target = 0;
+//      std::cout << concreteData.GetDataPoint((int)index)[0] << " " << concreteData.GetTarget((int)index) << std::endl;
 
       XT_X_11_ += datum[0] * datum[0];
       XT_X_12_ += datum[0];

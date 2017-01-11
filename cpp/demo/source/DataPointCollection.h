@@ -32,6 +32,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
   {
     std::vector<float> data_;
     int dimension_;
+    int targetDimension_;
 
     // only for classified data...
     std::vector<int> labels_;
@@ -52,8 +53,9 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     /// <param name="path">Path of file to be read.</param>
     /// <param name="bHasClassLabels">Are the data associated with class labels?</param>
     /// <param name="dataDimension">Dimension of the data (excluding class labels and target values).</param>
+    /// <param name="targetDimension">Dimension of the target values. ignored if the below param is false</param>
     /// <param name="bHasTargetValues">Are the data associated with target values.</param>
-    static  std::auto_ptr<DataPointCollection> Load(std::istream& r, int dataDimension, DataDescriptor::e descriptor);
+    static  std::auto_ptr<DataPointCollection> Load(std::istream& r, int dataDimension, int targetDimension, DataDescriptor::e descriptor);
 
     /// <summary>
     /// Generate a 2D dataset with data points distributed in a grid pattern.
@@ -169,12 +171,12 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     /// </summary>
     /// <param name="i">Zero-based data point index.</param>
     /// <returns>The target value.</returns>
-    float GetTarget(int i) const
+    const float* GetTarget(int i) const
     {
       if (!HasTargetValues())
         throw std::runtime_error("Data have no associated target values.");
 
-      return targets_[i]; // may throw an exception if index is out of range
+      return &targets_[i*targetDimension_]; // may throw an exception if index is out of range
     }
   };
 

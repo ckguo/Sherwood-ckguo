@@ -22,6 +22,8 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
   {
   private:
 	unsigned int dim_;
+	unsigned int data_dim_;
+	unsigned int target_dim_;
     Eigen::VectorXd means_;
     Eigen::MatrixXd cov_; // symmetric 2x2 covariance matrix
     Eigen::MatrixXd inv_cov_; // symmetric 2x2 inverse covariance matrix
@@ -54,6 +56,8 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
   {
   private:
     unsigned int sampleCount_;
+    unsigned int data_dim_;
+    unsigned int target_dim_;
     unsigned int dim_;
     Eigen::VectorXd sum_;    // sum
     Eigen::MatrixXd squares_;  // sum squares
@@ -69,7 +73,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       Clear();
     }
 
-    GaussianAggregatorNd(unsigned int dim, double a, double b);
+    GaussianAggregatorNd(unsigned int data_dim, unsigned int target_dim, double a, double b);
 
     GaussianPdfNd GetPdf() const;
 

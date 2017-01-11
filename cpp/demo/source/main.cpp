@@ -349,6 +349,7 @@ int main(int argc, char* argv[])
       trainingDataPath.Value,
       REGRESSION_DATA_PATH + "/" + trainingDataPath.Value,
       3,
+	  1,
       DataDescriptor::HasTargetValues ) );
 
     if (trainingData.get()==0)
@@ -380,6 +381,7 @@ std::auto_ptr<DataPointCollection> LoadTrainingData(
   const std::string& filename,
   const std::string& alternativePath,
   int dimension,
+  int targetDimension,
   DataDescriptor::e descriptor)
 {
   std::ifstream r;
@@ -417,6 +419,7 @@ std::auto_ptr<DataPointCollection> LoadTrainingData(
     trainingData = DataPointCollection::Load (
       r,
       dimension,
+	  targetDimension,
       descriptor );
   }
   catch (std::runtime_error& e)

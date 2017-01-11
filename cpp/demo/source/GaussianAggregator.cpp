@@ -73,15 +73,16 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
   }
 
-  GaussianAggregatorNd::GaussianAggregatorNd(unsigned int dim, double a, double b)
+  GaussianAggregatorNd::GaussianAggregatorNd(unsigned int data_dim, unsigned int target_dim, double a, double b)
   {
 	std::cout << "create aggregator" << std::endl;
-	std::cout << a << b << std::endl;
 
     assert(a > 0);
     assert(b > 0); // Hyperparameters a and b must be greater than or equal to zero.
 
-    dim_ = dim;
+    data_dim_ = data_dim;
+    target_dim_ = target_dim;
+    dim_ = data_dim + target_dim;
     sum_ = VectorXd::Zero(dim_);
     squares_ = MatrixXd::Zero(dim_, dim_);
 
@@ -143,15 +144,17 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     const DataPointCollection& concreteData = (const DataPointCollection&)(data);
 
     const float* datum = concreteData.GetDataPoint((int)index);
-    float target = concreteData.GetTarget((int)index);
+    const float* target = concreteData.GetTarget((int)index);
 
     VectorXf vector(dim_);
-    for (int i = 0; i < dim_-1; i++) {
+    for (int i = 0; i < data_dim_; i++) {
     	vector(i) = datum[i];
     	sum_(i) += datum[i];
     }
-    vector(dim_-1) = target;
-    sum_(dim_-1) += target;
+    for (int i = 0; i < target_dim_; i++) {
+        vector(i+data_dim_) = target[i];
+        sum_(i+data_dim_) += target[i];
+    }
 
     //TODO: write in linalg
     for (int i = 0; i < dim_; i++) {
@@ -188,7 +191,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
   {
 	std::cout << "clone aggregator" << std::endl;
 
-    GaussianAggregatorNd result(dim_, a_, b_);
+    GaussianAggregatorNd result(data_dim_, target_dim_, a_, b_);
 
     VectorXd sum = VectorXd::Zero(dim_);
     MatrixXd squares = MatrixXd::Zero(dim_, dim_);

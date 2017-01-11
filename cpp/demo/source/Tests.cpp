@@ -18,16 +18,18 @@ std::auto_ptr<DataPointCollection> LoadTrainingData(
   const std::string& filename,
   const std::string& alternativePath,
   int dimension,
+  int targetDimension,
   DataDescriptor::e descriptor);
 
 int main() {
-	GaussianAggregatorNd test1 = GaussianAggregatorNd(4, 1, 1);
-	GaussianAggregatorNd test2 = GaussianAggregatorNd(4, 1, 1);
-	GaussianAggregatorNd test3 = GaussianAggregatorNd(4, 1, 1);
+	GaussianAggregatorNd test1 = GaussianAggregatorNd(2, 2, 1, 1);
+	GaussianAggregatorNd test2 = GaussianAggregatorNd(2, 2, 1, 1);
+	GaussianAggregatorNd test3 = GaussianAggregatorNd(2, 2, 1, 1);
     std::auto_ptr<DataPointCollection> trainingData = std::auto_ptr<DataPointCollection>(LoadTrainingData(
       "demo/data/regression/test.txt",
 	  "/data/regression/test.txt",
-      3,
+      2,
+	  2,
       DataDescriptor::HasTargetValues ) );
     test1.Aggregate(*trainingData, 1);
     test1.Aggregate(*trainingData, 2);
@@ -47,6 +49,7 @@ int main() {
       "demo/data/regression/test2.txt",
 	  "/data/regression/test2.txt",
       1,
+	  1,
       DataDescriptor::HasTargetValues ) );
 
     TrainingParameters parameters;
@@ -78,6 +81,7 @@ std::auto_ptr<DataPointCollection> LoadTrainingData(
   const std::string& filename,
   const std::string& alternativePath,
   int dimension,
+  int targetDimension,
   DataDescriptor::e descriptor)
 {
   std::ifstream r;
@@ -115,6 +119,7 @@ std::auto_ptr<DataPointCollection> LoadTrainingData(
     trainingData = DataPointCollection::Load (
       r,
       dimension,
+	  targetDimension,
       descriptor );
   }
   catch (std::runtime_error& e)

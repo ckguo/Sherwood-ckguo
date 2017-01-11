@@ -36,7 +36,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
     GaussianAggregatorNd GetStatisticsAggregator()
     {
-      return GaussianAggregatorNd(2, 1, 1);
+      return GaussianAggregatorNd(1, 1, 1, 1);
     }
 
     double ComputeInformationGain(const GaussianAggregatorNd& allStatistics, const GaussianAggregatorNd& leftStatistics, const GaussianAggregatorNd& rightStatistics)
@@ -71,7 +71,6 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       const DataPointCollection& trainingData,
       const TrainingParameters& parameters)
     {
-//        std::cout << "hello" << std::endl;
       std::cout << "Training the forest..." << std::endl;
 
       Random random;
@@ -112,14 +111,9 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 		  int index = 0;
 		  for (int i = 0; i < PlotSize.Width; i++)
 		  {
-	//    	std::cout << "i = " << i << " plotSize width = " << PlotSize.Width << std::endl;
-
 			double totalProbability = 0.0;
 			for (int j = 0; j < PlotSize.Height; j++)
 			{
-
-	//          std::cout << "j = " << j << " plotSize height = " << PlotSize.Height << std::endl;
-
 			  // Map pixel coordinate (i,j) in visualization image back to point in input space
 			  float x = plotCanvas.plotRangeX.first + i * plotCanvas.stepX;
 			  float y = plotCanvas.plotRangeY.first + j * plotCanvas.stepY;
@@ -129,25 +123,14 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 			  // Aggregate statistics for this sample over all trees
 			  for (int t = 0; t < forest.TreeCount(); t++)
 			  {
-
-	//          	std::cout << "t = " << t << " tree count = " << forest.TreeCount() << std::endl;
-
-
 				Node<AxisAlignedFeatureResponse, GaussianAggregatorNd> leafNodeCopy = forest.GetTree((t)).GetNode(leafNodeIndices[t][i]);
-
-	//            std::cout << "got node" << std::endl;
 
 				const GaussianAggregatorNd& leafStatistics = leafNodeCopy.TrainingDataStatistics;
 
-	//            std::cout << "got stats" << std::endl;
 				Eigen::VectorXd v(4);
 				v << x, y, 0.5, 1.5;
-	//            std::cout << "got v" << std::endl;
 
 				probability += leafStatistics.GetPdf().GetProbability(v);
-
-	//            std::cout << "got probabilitiy" << std::endl;
-
 
 			  }
 
@@ -189,14 +172,12 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 			  (float)((mean_y_given_x[i+1] - plotCanvas.plotRangeY.first)/plotCanvas.stepY));
 		  }
 
-		  std::cout << "here 2" << std::cout;
-
 		  for (unsigned int s = 0; s < trainingData.Count(); s++)
 		  {
 			// Map sample coordinate back to a pixel coordinate in the visualization image
 			PointF x(
 			  (trainingData.GetDataPoint(s)[0] - plotCanvas.plotRangeX.first) / plotCanvas.stepX,
-			  (trainingData.GetTarget(s) - plotCanvas.plotRangeY.first) / plotCanvas.stepY);
+			  (trainingData.GetTarget(s)[0] - plotCanvas.plotRangeY.first) / plotCanvas.stepY);
 
 			RectangleF rectangle(x.X - 2.0f, x.Y - 2.0f, 4.0f, 4.0f);
 			g.FillRectangle(DataPointColor, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);

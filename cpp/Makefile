@@ -3,20 +3,12 @@ CFLAGS=-c -Wall -I lib -g -ggdb -O0 -ferror-limit=0
 LDFLAGS=-I /usr/local/include
 OUTDIR=bin/linux
 SOURCES=\
-demo/source/Classification.cpp\
 demo/source/DataPointCollection.cpp\
-demo/source/Regression.cpp\
-demo/source/RegressionGaussian.cpp\
 demo/source/RegressionGaussianNd.cpp\
-demo/source/SemiSupervisedClassification.cpp\
-demo/source/DensityEstimation.cpp\
-demo/source/FloydWarshall.cpp\
 demo/source/Graphics.cpp\
 demo/source/CommandLineParser.cpp\
 demo/source/dibCodec.cpp\
-demo/source/StatisticsAggregators.cpp\
 demo/source/GaussianAggregator.cpp\
-demo/source/CumulativeNormalDistribution.cpp\
 demo/source/FeatureResponseFunctions.cpp\
 demo/source/PlotCanvas.cpp\
 demo/source/Platform.cpp\

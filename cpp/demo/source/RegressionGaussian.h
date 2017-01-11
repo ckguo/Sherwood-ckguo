@@ -36,7 +36,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
     GaussianAggregatorNd GetStatisticsAggregator()
     {
-      return GaussianAggregatorNd(2, 1, 1);
+      return GaussianAggregatorNd(1, 1, 1, 1);
     }
 
     double ComputeInformationGain(const GaussianAggregatorNd& allStatistics, const GaussianAggregatorNd& leftStatistics, const GaussianAggregatorNd& rightStatistics)

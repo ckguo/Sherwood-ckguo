@@ -31,7 +31,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     return in;
   }
 
-  std::auto_ptr<DataPointCollection> DataPointCollection::Load(std::istream& r, int dataDimension, DataDescriptor::e descriptor)
+  std::auto_ptr<DataPointCollection> DataPointCollection::Load(std::istream& r, int dataDimension, int targetDimension, DataDescriptor::e descriptor)
   {
     bool bHasTargetValues = (descriptor & DataDescriptor::HasTargetValues) == DataDescriptor::HasTargetValues;
     bool bHasClassLabels = (descriptor & DataDescriptor::HasClassLabels) == DataDescriptor::HasClassLabels;
@@ -39,7 +39,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     std::auto_ptr<DataPointCollection> result = std::auto_ptr<DataPointCollection>(new DataPointCollection());
     result->dimension_ = dataDimension;
 
-    unsigned int elementsPerLine = (bHasClassLabels ? 1 : 0) + dataDimension + (bHasTargetValues ? 1 : 0);
+    unsigned int elementsPerLine = (bHasClassLabels ? 1 : 0) + dataDimension + (bHasTargetValues ? targetDimension : 0);
     std::string line;
     while (r.good())
     {
@@ -81,8 +81,10 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
       if (bHasTargetValues)
       {
-        float t = to_float(elements[index++]);
-        result->targets_.push_back(t);
+    	for (int i = 0; i < targetDimension; i++) {
+          float t = to_float(elements[index++]);
+          result->targets_.push_back(t);
+    	}
       }
     }
 

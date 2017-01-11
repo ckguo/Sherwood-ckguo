@@ -31,12 +31,12 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     // Implementation of ITrainingContext
 	  AxisAlignedFeatureResponse GetRandomFeature(Random& random)
     {
-      return AxisAlignedFeatureResponse(random.Next()%3);
+      return AxisAlignedFeatureResponse(random.Next()%1);
     }
 
     GaussianAggregatorNd GetStatisticsAggregator()
     {
-      return GaussianAggregatorNd(4, 1, 1);
+      return GaussianAggregatorNd(2, 1, 1);
     }
 
     double ComputeInformationGain(const GaussianAggregatorNd& allStatistics, const GaussianAggregatorNd& leftStatistics, const GaussianAggregatorNd& rightStatistics)
@@ -94,7 +94,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 	// Generate some test samples in a grid pattern (a useful basis for creating visualization images)
 		  PlotCanvas plotCanvas(trainingData.GetRange(0), trainingData.GetTargetRange(), PlotSize, PlotDilation);
 
-		  std::auto_ptr<DataPointCollection> testData = DataPointCollection::GenerateNdGrid(plotCanvas.plotRangeX, PlotSize.Width);
+		  std::auto_ptr<DataPointCollection> testData = DataPointCollection::Generate1dGrid(plotCanvas.plotRangeX, PlotSize.Width);
 
 		  std::cout << "\nApplying the forest to test data..." << std::endl;
 

@@ -14,13 +14,13 @@ demo/source/FloydWarshall.cpp\
 demo/source/Graphics.cpp\
 demo/source/CommandLineParser.cpp\
 demo/source/dibCodec.cpp\
-demo/source/main.cpp\
 demo/source/StatisticsAggregators.cpp\
 demo/source/GaussianAggregator.cpp\
 demo/source/CumulativeNormalDistribution.cpp\
 demo/source/FeatureResponseFunctions.cpp\
 demo/source/PlotCanvas.cpp\
-demo/source/Platform.cpp
+demo/source/Platform.cpp\
+demo/source/Tests.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=$(OUTDIR)/sw

@@ -38,7 +38,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
     std::auto_ptr<DataPointCollection> result = std::auto_ptr<DataPointCollection>(new DataPointCollection());
     result->dimension_ = dataDimension;
-
+    result->targetDimension_ = targetDimension;
     unsigned int elementsPerLine = (bHasClassLabels ? 1 : 0) + dataDimension + (bHasTargetValues ? targetDimension : 0);
     std::string line;
     while (r.good())

@@ -146,6 +146,8 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     const float* datum = concreteData.GetDataPoint((int)index);
     const float* target = concreteData.GetTarget((int)index);
 
+    std::cout << datum[0] << " " << target[0] << std::endl;
+
     VectorXf vector(dim_);
     for (int i = 0; i < data_dim_; i++) {
     	vector(i) = datum[i];

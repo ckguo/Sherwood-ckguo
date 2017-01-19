@@ -36,10 +36,10 @@ int main() {
     test2.Aggregate(*trainingData, 2);
     test3.Aggregate(*trainingData, 1);
     test3.Aggregate(test2);
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 2; i++) {
 		assert(test1.GetPdf().Mean(i) == test3.GetPdf().Mean(i));
 	    std::cout << "means " << i << ": " << test1.GetPdf().Mean(i) << " " << test3.GetPdf().Mean(i) << std::endl;
-		for (int j = 0; j < 4; j++) {
+		for (int j = 0; j < 2; j++) {
 			assert(test1.GetPdf().Variance(i,j) == test3.GetPdf().Variance(i,j));
 			std::cout << "covariance " << i << j << ": " << test1.GetPdf().Variance(i, j) << " " << test3.GetPdf().Variance(i, j) << std::endl;
 		}
@@ -69,10 +69,10 @@ int main() {
 	const GaussianAggregatorNd& leafStatistics2 = node2.TrainingDataStatistics;
 
 	std::cout << leafStatistics1.GetPdf().Mean(0) << std::endl;
-	std::cout << leafStatistics1.GetPdf().Mean(1) << std::endl;
+//	std::cout << leafStatistics1.GetPdf().Mean(1) << std::endl;
 
 	std::cout << leafStatistics2.GetPdf().Mean(0) << std::endl;
-	std::cout << leafStatistics2.GetPdf().Mean(1) << std::endl;
+//	std::cout << leafStatistics2.GetPdf().Mean(1) << std::endl;
 
 
 }

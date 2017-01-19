@@ -82,7 +82,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
     data_dim_ = data_dim;
     target_dim_ = target_dim;
-    dim_ = data_dim + target_dim;
+    dim_ = target_dim;
     sum_ = VectorXd::Zero(dim_);
     squares_ = MatrixXd::Zero(dim_, dim_);
 
@@ -149,13 +149,18 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     std::cout << datum[0] << " " << target[0] << std::endl;
 
     VectorXf vector(dim_);
-    for (int i = 0; i < data_dim_; i++) {
-    	vector(i) = datum[i];
-    	sum_(i) += datum[i];
-    }
-    for (int i = 0; i < target_dim_; i++) {
-        vector(i+data_dim_) = target[i];
-        sum_(i+data_dim_) += target[i];
+//    for (int i = 0; i < data_dim_; i++) {
+//    	vector(i) = datum[i];
+//    	sum_(i) += datum[i];
+//    }
+//    for (int i = 0; i < target_dim_; i++) {
+//        vector(i+data_dim_) = target[i];
+//        sum_(i+data_dim_) += target[i];
+//    }
+
+    for (int i = 0; i < dim_; i++) {
+    	vector(i) = target[i];
+    	sum_(i) += target[i];
     }
 
     //TODO: write in linalg

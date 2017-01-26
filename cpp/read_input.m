@@ -8,7 +8,7 @@ offsets = [[3,3,3]; [-3,3,3]; [3,-3,3]; [3,3,-3]; [-3,-3,3]; [3,-3,-3]; [-3,3,-3
 fileID = fopen('test.txt','w');
 features = zeros(s(1)*s(2)*s(3), size(offsets,1)*size(box_sizes,1));
 pad_size = [7,7,7];
-pad = padarray(img, pad_size);
+pad = padarray(img, pad_size, 'replicate');
 for ind1=1:size(box_sizes,1)
     half_box_size = half_box_sizes(ind1,:);
     box_size = box_sizes(ind1,:);
@@ -24,5 +24,10 @@ for ind1=1:size(box_sizes,1)
     end
 end
 
-% fprintf(fileID, '%4.2f\n', avg_intensity);
+format_string = '';
+for i=1:size(features,2)-1
+    format_string = strcat(format_string, '%4.4f\t ');
+end
+format_string = strcat(format_string, '%4.4f\n');
 
+fprintf(fileID, format_string, features);

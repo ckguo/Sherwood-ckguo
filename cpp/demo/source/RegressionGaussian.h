@@ -103,7 +103,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       std::cout << "graphing" << std::endl;
       // Generate visualization image
       std::auto_ptr<Bitmap<PixelBgr> > result = std::auto_ptr<Bitmap<PixelBgr> >(new Bitmap<PixelBgr> (PlotSize.Width, PlotSize.Height));
-
+      std::cout << "hi" << std::endl;
       // Plot the learned density
       PixelBgr inverseDensityColor = PixelBgr::FromArgb(255 - DensityColor.R, 255 - DensityColor.G, 255 - DensityColor.B);
 
@@ -112,7 +112,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       int index = 0;
       for (int i = 0; i < PlotSize.Width; i++)
       {
-//    	std::cout << "i = " << i << " plotSize width = " << PlotSize.Width << std::endl;
+    	std::cout << "i = " << i << " plotSize width = " << PlotSize.Width << std::endl;
 
         double totalProbability = 0.0;
         for (int j = 0; j < PlotSize.Height; j++)

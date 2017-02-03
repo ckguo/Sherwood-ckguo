@@ -12,7 +12,7 @@ demo/source/GaussianAggregator.cpp\
 demo/source/FeatureResponseFunctions.cpp\
 demo/source/PlotCanvas.cpp\
 demo/source/Platform.cpp\
-demo/source/Tests.cpp
+demo/source/main.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=$(OUTDIR)/sw

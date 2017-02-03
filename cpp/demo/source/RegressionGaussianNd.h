@@ -31,12 +31,12 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     // Implementation of ITrainingContext
 	  AxisAlignedFeatureResponse GetRandomFeature(Random& random)
     {
-      return AxisAlignedFeatureResponse(random.Next()%1);
+      return AxisAlignedFeatureResponse(random.Next()%16);
     }
 
     GaussianAggregatorNd GetStatisticsAggregator()
     {
-      return GaussianAggregatorNd(1, 1, 1, 1);
+      return GaussianAggregatorNd(16, 6, 1, 1);
     }
 
     double ComputeInformationGain(const GaussianAggregatorNd& allStatistics, const GaussianAggregatorNd& leftStatistics, const GaussianAggregatorNd& rightStatistics)

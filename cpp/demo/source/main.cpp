@@ -11,16 +11,9 @@
 
 #include "Sherwood.h"
 
-#include "CumulativeNormalDistribution.h"
-
 #include "CommandLineParser.h"
 #include "DataPointCollection.h"
 
-#include "Classification.h"
-#include "DensityEstimation.h"
-#include "SemiSupervisedClassification.h"
-#include "Regression.h"
-#include "RegressionGaussian.h"
 #include "StatisticsAggregators.h"
 #include "RegressionGaussianNd.h"
 
@@ -34,6 +27,7 @@ std::auto_ptr<DataPointCollection> LoadTrainingData(
   const std::string& filename,
   const std::string& alternativePath,
   int dimension,
+  int targetDimension,
   DataDescriptor::e descriptor);
 
 // Store (Linux-friendly) relative paths to training data
@@ -76,235 +70,8 @@ int main(int argc, char* argv[])
     "axis");
 
   // Behaviour depends on command line mode...
-  if (mode == "clas" || mode == "class")
-  {
-    // Supervised classification
-    CommandLineParser parser;
-    parser.SetCommand("SW CLAS");
 
-    parser.AddArgument(trainingDataPath);
-    parser.AddSwitch("T", T);
-    parser.AddSwitch("D", D);
-    parser.AddSwitch("F", F);
-    parser.AddSwitch("L", L);
-
-    parser.AddSwitch("split", split);
-
-    parser.AddSwitch("PADX", plotPaddingX);
-    parser.AddSwitch("PADY",  plotPaddingY);
-    parser.AddSwitch("VERBOSE", verboseSwitch);
-
-    if (argc == 2)
-    {
-      parser.PrintHelp();
-      DisplayTextFiles(CLAS_DATA_PATH);
-      return 0;
-    }
-
-    if (parser.Parse(argc, argv, 2) == false)
-      return 0;
-
-    TrainingParameters trainingParameters;
-    trainingParameters.MaxDecisionLevels = D.Value-1;
-    trainingParameters.NumberOfCandidateFeatures = F.Value;
-    trainingParameters.NumberOfCandidateThresholdsPerFeature = L.Value;
-    trainingParameters.NumberOfTrees = T.Value;
-    trainingParameters.Verbose = verboseSwitch.Used();
-
-    PointF plotDilation(plotPaddingX.Value, plotPaddingY.Value);
-
-    // Load training data for a 2D density estimation problem.
-    std::auto_ptr<DataPointCollection> trainingData = std::auto_ptr<DataPointCollection> ( LoadTrainingData(
-      trainingDataPath.Value,
-      CLAS_DATA_PATH + "/" + trainingDataPath.Value,
-      2,
-      DataDescriptor::HasClassLabels ) );
-
-    if (trainingData.get()==0)
-      return 0; // LoadTrainingData() generates its own progress/error messages
-
-    if (split.Value == "linear")
-    {
-      LinearFeatureFactory linearFeatureFactory;
-      std::auto_ptr<Forest<LinearFeatureResponse2d, HistogramAggregator> > forest = ClassificationDemo<LinearFeatureResponse2d>::Train(
-        *trainingData,
-        &linearFeatureFactory,
-        trainingParameters);
-
-      std::auto_ptr<Bitmap<PixelBgr> > result = std::auto_ptr<Bitmap<PixelBgr> >(
-        ClassificationDemo<LinearFeatureResponse2d>::Visualize(*forest, *trainingData, Size(300, 300), plotDilation));
-
-      std::cout << "\nSaving output image to result.dib" << std::endl;
-      result->Save("result.dib");
-    }
-    else if (split.Value == "axis")
-    {
-      AxisAlignedFeatureResponseFactory axisAlignedFeatureFactory;
-      std::auto_ptr<Forest<AxisAlignedFeatureResponse, HistogramAggregator> > forest = ClassificationDemo<AxisAlignedFeatureResponse>::Train (
-        *trainingData,
-        &axisAlignedFeatureFactory,
-        trainingParameters );
-
-      std::auto_ptr<Bitmap <PixelBgr> > result = std::auto_ptr<Bitmap <PixelBgr> >(
-        ClassificationDemo<AxisAlignedFeatureResponse>::Visualize(*forest, *trainingData, Size(300, 300), plotDilation));
-
-      std::cout << "\nSaving output image to result.dib" << std::endl;
-      result->Save("result.dib");
-    }
-  }
-  else if (mode == "density")
-  {
-    // Density Estimation
-    CommandLineParser parser;
-
-    parser.SetCommand("SW " + toUpper(mode));
-
-    parser.AddArgument(trainingDataPath);
-    parser.AddSwitch("T", T);
-    parser.AddSwitch("D", D);
-    parser.AddSwitch("F", F);
-    parser.AddSwitch("L", L);
-
-    parser.AddSwitch("split", split);
-
-    // For density estimation (and semi-supervised learning) we add 
-    // a command line option to set the hyperparameters of the prior.
-    parser.AddSwitch("a", a);
-    parser.AddSwitch("b", b);
-
-    parser.AddSwitch("PADX", plotPaddingX);
-    parser.AddSwitch("PADY",  plotPaddingY);
-    parser.AddSwitch("VERBOSE", verboseSwitch);
-
-    // We also override default values for command line options
-    T.Value = 1;
-    D.Value = 3;
-    F.Value = 5;
-    L.Value = 1;
-    a.Value = 0;
-    b.Value = 900;
-
-    if (argc == 2)
-    {
-      parser.PrintHelp();
-      DisplayTextFiles(DENSITY_DATA_PATH);
-      return 0;
-    }
-
-    if (parser.Parse(argc, argv, 2) == false)
-      return 0;
-
-    TrainingParameters parameters;
-    parameters.MaxDecisionLevels = D.Value-1;
-    parameters.NumberOfCandidateFeatures = F.Value;
-    parameters.NumberOfCandidateThresholdsPerFeature = L.Value;
-    parameters.NumberOfTrees = T.Value;
-    parameters.Verbose = verboseSwitch.Used();
-
-    // Load training data for a 2D density estimation problem.
-    std::auto_ptr<DataPointCollection> trainingData = std::auto_ptr<DataPointCollection>(LoadTrainingData(
-      trainingDataPath.Value,
-      DENSITY_DATA_PATH + "/" + trainingDataPath.Value,
-      2,
-      DataDescriptor::Unadorned ) );
-
-    if (trainingData.get()==0)
-      return 0; // LoadTrainingData() generates its own progress/error messages
-
-    std::auto_ptr<Forest<AxisAlignedFeatureResponse, GaussianAggregator2d> > forest = std::auto_ptr<Forest<AxisAlignedFeatureResponse, GaussianAggregator2d> >(
-      DensityEstimationExample::Train(*trainingData, parameters, a.Value, b.Value) );
-
-    PointF plotDilation(plotPaddingX.Value, plotPaddingY.Value);
-
-    std::auto_ptr<Bitmap <PixelBgr> > result = std::auto_ptr<Bitmap <PixelBgr> >(DensityEstimationExample::Visualize(*(forest.get()), *trainingData, Size(300,300), plotDilation));
-
-    std::cout << "\nSaving output image to result.dib" << std::endl;
-    result->Save("result.dib");
-  }
-  else if (mode == "ssclas" || mode=="ssclass")
-  {
-    // Semi-supervised classification
-    CommandLineParser parser;
-
-    parser.SetCommand(toUpper(mode));
-
-    parser.AddArgument(trainingDataPath);
-    parser.AddSwitch("T", T);
-    parser.AddSwitch("D", D);
-    parser.AddSwitch("F", F);
-    parser.AddSwitch("L", L);
-
-    parser.AddSwitch("split", split);
-
-    EnumParameter plotMode(
-      "plot",
-      "Determines what to plot",
-      "density;labels",
-      "plot recovered density estimate;plot class likelihood",
-      "labels");
-    parser.AddSwitch("plot", plotMode);
-
-    parser.AddSwitch("a", a);
-    parser.AddSwitch("b", b);
-
-    parser.AddSwitch("PADX", plotPaddingX);
-    parser.AddSwitch("PADY",  plotPaddingY);
-    parser.AddSwitch("VERBOSE", verboseSwitch);
-
-    // Override default values for command line options
-    T.Value = 10;
-    D.Value = 12-1;
-    F.Value = 30;
-    L.Value = 1;
-
-    if (argc == 2)
-    {
-      parser.PrintHelp();
-      DisplayTextFiles(SSCLAS_DATA_PATH);
-      return 0;
-    }
-
-    if (parser.Parse(argc, argv, 2) == false)
-      return 0;
-
-    // Load training data for a 2D density estimation problem.
-    std::auto_ptr<DataPointCollection> trainingData = std::auto_ptr<DataPointCollection>(LoadTrainingData(
-      trainingDataPath.Value,
-      SSCLAS_DATA_PATH + "/" + trainingDataPath.Value,
-      2,
-      DataDescriptor::HasClassLabels ) );
-
-    if (trainingData.get()==0)
-      return 0; // LoadTrainingData() generates its own progress/error messages
-
-    TrainingParameters parameters;
-    parameters.MaxDecisionLevels = D.Value-1;
-    parameters.NumberOfCandidateFeatures = F.Value;
-    parameters.NumberOfCandidateThresholdsPerFeature = L.Value;
-    parameters.NumberOfTrees = T.Value;
-    parameters.Verbose = verboseSwitch.Used();
-
-    std::auto_ptr<Forest<LinearFeatureResponse2d, SemiSupervisedClassificationStatisticsAggregator> > forest
-      = SemiSupervisedClassificationExample::Train(*trainingData, parameters, a.Value, b.Value );
-
-    PointF plotPadding(plotPaddingX.Value, plotPaddingY.Value);
-
-    if(plotMode.Value=="labels")
-    {
-      std::auto_ptr<Bitmap<PixelBgr> > result = SemiSupervisedClassificationExample::VisualizeLabels(*forest, *trainingData, Size(300,300), plotPadding);
-
-      std::cout << "\nSaving output image to result.dib" << std::endl;
-      result->Save("result.dib");
-    }
-    else if(plotMode.Value=="density")
-    {
-      std::auto_ptr<Bitmap<PixelBgr> > result = SemiSupervisedClassificationExample::VisualizeDensity(*forest, *trainingData, Size(300,300), plotPadding);
-
-      std::cout << "\nSaving output image to result.dib" << std::endl;
-      result->Save("result.dib");
-    }
-  }
-  else if (mode == "regression")
+  if (mode == "regression")
   {
     // Regression
     CommandLineParser parser;
@@ -348,8 +115,8 @@ int main(int argc, char* argv[])
     std::auto_ptr<DataPointCollection> trainingData = std::auto_ptr<DataPointCollection>(LoadTrainingData(
       trainingDataPath.Value,
       REGRESSION_DATA_PATH + "/" + trainingDataPath.Value,
-      3,
-	  1,
+      16,
+	  6,
       DataDescriptor::HasTargetValues ) );
 
     if (trainingData.get()==0)

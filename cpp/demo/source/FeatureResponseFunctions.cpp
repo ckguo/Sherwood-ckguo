@@ -3,12 +3,18 @@
 #include <cmath>
 
 #include <sstream>
+#include <Eigen/Core>
+#include <nifti1_io.h>
 
 #include "DataPointCollection.h"
 #include "Random.h"
 
 namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 {
+
+  using namespace Eigen;
+
+
   AxisAlignedFeatureResponse AxisAlignedFeatureResponse ::CreateRandom(Random& random)
   {
     return AxisAlignedFeatureResponse(random.Next(0, 2));
@@ -50,6 +56,46 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     std::stringstream s;
     s << "LinearFeatureResponse(" << dx_ << "," << dy_ << ")";
 
+    return s.str();
+  }
+
+  BoxOffsetFeatureResponse BoxOffsetFeatureResponse::CreateRandom(Random& random)
+  {
+	std::srand((unsigned int) time(0));
+	VectorXf randomOffset = 50*VectorXf::Random(6);
+    std::srand((unsigned int) time(0));
+    Vector3f randomHalfBoxSize = 6*Vector3f::Random();
+	VectorXi intOffset = randomOffset.cwiseAbs().cast<int>();
+	Vector3i intHalfBoxSize = randomHalfBoxSize.cast<int>();
+
+    return BoxOffsetFeatureResponse(intOffset, intHalfBoxSize);
+  }
+
+  MatrixXf BoxOffsetFeatureResponse::dataset_ = MatrixXf::Random(3, 3);
+
+  float BoxOffsetFeatureResponse::GetResponse(const IDataPointCollection& data, unsigned int sampleIndex) const
+  {
+//    const DataPointCollection& concreteData = (DataPointCollection&)(data);
+//    int sum = 0;
+//    int count = 0;
+//	for (int i = offset(2*dim); i < offset(2*dim+1), i++) {
+//
+//		sum += concreteData.GetDataPoint(j)[0];
+//
+//	}
+//
+//    return concreteData.GetDataPoint((int)sampleIndex)[axis_];
+	  std::cout << offset_ << std::endl;
+	  std::cout << halfBoxSize_ << std::endl;
+	  std::cout << dataset_ << std::endl;
+	  return 0;
+  }
+
+  std::string BoxOffsetFeatureResponse::ToString() const
+  {
+    std::stringstream s;
+//    s << "BoxOffsetFeatureResponse(" << axis_ << ")";
+    s << "BoxOffsetFeatureResponse";
     return s.str();
   }
 

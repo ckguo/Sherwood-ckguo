@@ -6,8 +6,11 @@
 // contiguously in a linear array.
 
 #include <string>
+#include <Eigen/Core>
+#include <nifti1_io.h>
 
 #include "Sherwood.h"
+
 
 namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 {
@@ -91,4 +94,41 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
     std::string ToString()  const;
   };	
+
+  class BoxOffsetFeatureResponse
+    {
+	  Eigen::VectorXi offset_;
+	  Eigen::Vector3i halfBoxSize_;
+	  static Eigen::MatrixXf dataset_;
+
+    public:
+      BoxOffsetFeatureResponse()
+      {
+        offset_ = Eigen::VectorXi::Zero(6);
+        halfBoxSize_ = Eigen::Vector3i::Zero();
+      }
+
+      /// <summary>
+      /// Create an AxisAlignedFeatureResponse instance for the specified axis.
+      /// </summary>
+      /// <param name="axis">The zero-based index of the axis.</param>
+      BoxOffsetFeatureResponse(Eigen::VectorXi offset, Eigen::Vector3i halfBoxSize)
+      {
+        offset_ = offset;
+        halfBoxSize_ = halfBoxSize;
+      }
+
+      /// <summary>
+      /// Create an AxisAlignedFeatureResponse instance with a random choice of axis.
+      /// </summary>
+      /// <param name="randomNumberGenerator">A random number generator.</param>
+      /// <returns>A new AxisAlignedFeatureResponse instance.</returns>
+      static BoxOffsetFeatureResponse CreateRandom(Random& random);
+
+      // IFeatureResponse implementation
+      float GetResponse(const IDataPointCollection& data, unsigned int sampleIndex) const;
+
+      std::string ToString() const;
+    };
+
 } } }

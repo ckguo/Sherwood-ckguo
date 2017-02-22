@@ -25,18 +25,18 @@
 
 namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 {
-  class RegressionGaussianNdTrainingContext : public ITrainingContext<AxisAlignedFeatureResponse, GaussianAggregatorNd>
+  class RegressionGaussianNdTrainingContext : public ITrainingContext<BoxOffsetFeatureResponse, GaussianAggregatorNd>
   {
   public:
     // Implementation of ITrainingContext
-	  AxisAlignedFeatureResponse GetRandomFeature(Random& random)
+	  BoxOffsetFeatureResponse GetRandomFeature(Random& random)
     {
-      return AxisAlignedFeatureResponse(random.Next()%16);
+      return BoxOffsetFeatureResponse::CreateRandom(random);
     }
 
     GaussianAggregatorNd GetStatisticsAggregator()
     {
-      return GaussianAggregatorNd(16, 6, 1, 1);
+      return GaussianAggregatorNd(2, 2, 1, 1);
     }
 
     double ComputeInformationGain(const GaussianAggregatorNd& allStatistics, const GaussianAggregatorNd& leftStatistics, const GaussianAggregatorNd& rightStatistics)
@@ -67,7 +67,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     static const PixelBgr DataPointBorderColor;
     static const PixelBgr MeanColor;
 
-    static std::auto_ptr<Forest<AxisAlignedFeatureResponse, GaussianAggregatorNd> > Train(
+    static std::auto_ptr<Forest<BoxOffsetFeatureResponse, GaussianAggregatorNd> > Train(
       const DataPointCollection& trainingData,
       const TrainingParameters& parameters)
     {
@@ -77,15 +77,15 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
       RegressionGaussianNdTrainingContext regressionTrainingContext;
 
-      std::auto_ptr<Forest<AxisAlignedFeatureResponse, GaussianAggregatorNd> > forest
-        = ForestTrainer<AxisAlignedFeatureResponse, GaussianAggregatorNd>::TrainForest(
+      std::auto_ptr<Forest<BoxOffsetFeatureResponse, GaussianAggregatorNd> > forest
+        = ForestTrainer<BoxOffsetFeatureResponse, GaussianAggregatorNd>::TrainForest(
         random, parameters, regressionTrainingContext, trainingData);
 
       return forest;
     }
 
     static std::auto_ptr<Bitmap<PixelBgr> > Visualize(
-      Forest<AxisAlignedFeatureResponse, GaussianAggregatorNd>& forest,
+      Forest<BoxOffsetFeatureResponse, GaussianAggregatorNd>& forest,
       const DataPointCollection& trainingData,
       Size PlotSize,
       PointF PlotDilation )
@@ -123,7 +123,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 			  // Aggregate statistics for this sample over all trees
 			  for (int t = 0; t < forest.TreeCount(); t++)
 			  {
-				Node<AxisAlignedFeatureResponse, GaussianAggregatorNd> leafNodeCopy = forest.GetTree((t)).GetNode(leafNodeIndices[t][i]);
+				Node<BoxOffsetFeatureResponse, GaussianAggregatorNd> leafNodeCopy = forest.GetTree((t)).GetNode(leafNodeIndices[t][i]);
 
 				const GaussianAggregatorNd& leafStatistics = leafNodeCopy.TrainingDataStatistics;
 

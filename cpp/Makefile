@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-c -Wall -I lib -g -ggdb -O0 -ferror-limit=0
-LDFLAGS=-I /usr/local/include
+LDFLAGS=-I /usr/local/include -I /usr/local/include/nifticlib-2.0.0/include
 OUTDIR=bin/linux
 SOURCES=\
 demo/source/DataPointCollection.cpp\
@@ -25,7 +25,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 .cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
 
 clean: 
 	rm -f sw $(OBJECTS)

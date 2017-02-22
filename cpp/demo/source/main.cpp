@@ -115,14 +115,14 @@ int main(int argc, char* argv[])
     std::auto_ptr<DataPointCollection> trainingData = std::auto_ptr<DataPointCollection>(LoadTrainingData(
       trainingDataPath.Value,
       REGRESSION_DATA_PATH + "/" + trainingDataPath.Value,
-      16,
-	  6,
+      2,
+	  2,
       DataDescriptor::HasTargetValues ) );
 
     if (trainingData.get()==0)
       return 0; // LoadTrainingData() generates its own progress/error messages
 
-    std::auto_ptr<Forest<AxisAlignedFeatureResponse, GaussianAggregatorNd> > forest = RegressionGaussianExampleNd::Train(
+    std::auto_ptr<Forest<BoxOffsetFeatureResponse, GaussianAggregatorNd> > forest = RegressionGaussianExampleNd::Train(
       *trainingData.get(), parameters);
 
 //	std::auto_ptr<Forest<AxisAlignedFeatureResponse, LinearFitAggregator1d> > forest = RegressionExample::Train(

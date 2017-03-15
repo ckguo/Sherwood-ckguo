@@ -1,6 +1,7 @@
 CC=g++
 CFLAGS=-c -Wall -I lib -g -ggdb -O0 -ferror-limit=0
-LDFLAGS=-I /usr/local/include -I /usr/local/include/nifticlib-2.0.0/include
+LDFLAGS=-I/usr/local/include -I/usr/local/include/nifticlib-2.0.0/include
+LIBFLAGS=-L/usr/local/include/nifticlib-2.0.0/lib -lfslio -lnifticdf -lniftiio -lznz -lz
 OUTDIR=bin/linux
 SOURCES=\
 demo/source/DataPointCollection.cpp\
@@ -22,7 +23,7 @@ all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	mkdir -p $(OUTDIR)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+	$(CC) $(LDFLAGS) $(LIBFLAGS) $(OBJECTS) -o $@
 
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)

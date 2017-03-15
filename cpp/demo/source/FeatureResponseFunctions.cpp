@@ -1,6 +1,7 @@
 #include "FeatureResponseFunctions.h"
 
 #include <cmath>
+#include <algorithm>
 
 #include <sstream>
 #include <Eigen/Core>
@@ -65,30 +66,64 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 	VectorXf randomOffset = 50*VectorXf::Random(6);
     std::srand((unsigned int) time(0));
     Vector3f randomHalfBoxSize = 6*Vector3f::Random();
-	VectorXi intOffset = randomOffset.cwiseAbs().cast<int>();
-	Vector3i intHalfBoxSize = randomHalfBoxSize.cast<int>();
+	VectorXi intOffset = randomOffset.cast<int>();
+	Vector3i intHalfBoxSize = randomHalfBoxSize.cwiseAbs().cast<int>();
 
     return BoxOffsetFeatureResponse(intOffset, intHalfBoxSize);
   }
 
-  MatrixXf BoxOffsetFeatureResponse::dataset_ = MatrixXf::Random(3, 3);
+  nifti_image * nim = nifti_image_read("../../dataset_full/training_axial_full_resampled_pat0.nii.gz", 1);
+  double * BoxOffsetFeatureResponse::dataset_ = (double*)nim->data;
+//  std::cout << "hi" << std::endl;
+
+  // returns the value at the pixel, if it is out of bounds it will return a padded value
+  float BoxOffsetFeatureResponse::ValueAtPixel(int patient, int i, int j, int k) {
+	  int dimx = nim->nx;
+	  int dimy = nim->ny;
+	  int dimz = nim->nz;
+
+	  i = std::max(0, std::min(dimx-1, i));
+	  j = std::max(0, std::min(dimy-1, j));
+	  k = std::max(0, std::min(dimz-1, k));
+	  double val = dataset_[i + dimx*j + dimx*dimy*k];
+//	  if (val != 0) {
+//		  std::cout << "value at pixel" << val << std::endl;
+//	  }
+	  return val;
+  }
 
   float BoxOffsetFeatureResponse::GetResponse(const IDataPointCollection& data, unsigned int sampleIndex) const
   {
-//    const DataPointCollection& concreteData = (DataPointCollection&)(data);
-//    int sum = 0;
-//    int count = 0;
-//	for (int i = offset(2*dim); i < offset(2*dim+1), i++) {
-//
-//		sum += concreteData.GetDataPoint(j)[0];
-//
-//	}
-//
-//    return concreteData.GetDataPoint((int)sampleIndex)[axis_];
-	  std::cout << offset_ << std::endl;
-	  std::cout << halfBoxSize_ << std::endl;
-	  std::cout << dataset_ << std::endl;
-	  return 0;
+    const DataPointCollection& concreteData = (DataPointCollection&)(data);
+    // data: p, i, j, k, (bounding offset)
+    // p = patient number, (i,j,k) = coordinates
+    float sum = 0;
+    int count = 0;
+
+    const float* datum = concreteData.GetDataPoint((int)sampleIndex);
+
+    const float p = datum[0];
+//    std::cout << "start" << std::endl;
+//    std::cout << p << " " << datum[1] << " " << datum[2] << " " << datum[3] << std::endl;
+
+    for (int i = offset_[0]-halfBoxSize_[0]; i <= offset_[0]+halfBoxSize_[0]; i++) {
+        for (int j = offset_[1]-halfBoxSize_[1]; j <= offset_[1]+halfBoxSize_[1]; j++) {
+            for (int k = offset_[2]-halfBoxSize_[2]; k <= offset_[2]+halfBoxSize_[2]; k++) {
+            	sum += BoxOffsetFeatureResponse::ValueAtPixel(p, datum[1]+i, datum[2]+j, datum[3]+k);
+            	count ++;
+            }
+        }
+    }
+
+
+    // check if numbers are right
+//    std::cout << sum/count << std::endl;
+//    std::cout << count << std::endl;
+
+//	  std::cout << offset_ << std::endl;
+//	  std::cout << halfBoxSize_ << std::endl;
+//	  std::cout << "end" << std::endl;
+	  return sum/count;
   }
 
   std::string BoxOffsetFeatureResponse::ToString() const

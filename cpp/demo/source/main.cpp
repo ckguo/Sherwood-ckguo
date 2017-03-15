@@ -89,8 +89,8 @@ int main(int argc, char* argv[])
     parser.AddSwitch("VERBOSE", verboseSwitch);
 
     // Override defaults
-    T.Value = 10;
-    D.Value = 5;
+    T.Value = 1;
+    D.Value = 1;
     a.Value = 0;
     b.Value = 900;
 
@@ -115,8 +115,8 @@ int main(int argc, char* argv[])
     std::auto_ptr<DataPointCollection> trainingData = std::auto_ptr<DataPointCollection>(LoadTrainingData(
       trainingDataPath.Value,
       REGRESSION_DATA_PATH + "/" + trainingDataPath.Value,
-      2,
-	  2,
+      4,
+	  6,
       DataDescriptor::HasTargetValues ) );
 
     if (trainingData.get()==0)

@@ -99,7 +99,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     {
 	  Eigen::VectorXi offset_;
 	  Eigen::Vector3i halfBoxSize_;
-	  static Eigen::MatrixXf dataset_;
+	  static double * dataset_;
 
     public:
       BoxOffsetFeatureResponse()
@@ -117,6 +117,8 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
         offset_ = offset;
         halfBoxSize_ = halfBoxSize;
       }
+
+      static float ValueAtPixel(int patient, int i, int j, int k);
 
       /// <summary>
       /// Create an AxisAlignedFeatureResponse instance with a random choice of axis.

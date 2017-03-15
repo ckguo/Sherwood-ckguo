@@ -36,11 +36,12 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
     GaussianAggregatorNd GetStatisticsAggregator()
     {
-      return GaussianAggregatorNd(2, 2, 1, 1);
+      return GaussianAggregatorNd(4, 6, 100, 100);
     }
 
     double ComputeInformationGain(const GaussianAggregatorNd& allStatistics, const GaussianAggregatorNd& leftStatistics, const GaussianAggregatorNd& rightStatistics)
     {
+    	std::cout << "computing information gain" << std::endl;
       double entropyBefore = ((GaussianAggregatorNd)(allStatistics)).GetPdf().Entropy();
 
       GaussianAggregatorNd leftLineFitStats = (GaussianAggregatorNd)(leftStatistics);

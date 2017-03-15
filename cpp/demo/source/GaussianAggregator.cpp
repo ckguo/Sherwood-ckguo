@@ -11,16 +11,16 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
   GaussianPdfNd::GaussianPdfNd(unsigned int dim, VectorXd& means, MatrixXd& cov)
   {
-//	std::cout << "create PDF" << std::endl;
+	std::cout << "create PDF" << std::endl;
     dim_ = dim;
 	means_ = means;
 	cov_ = cov;
 
 	det_Sigma_ = cov_.determinant();
 
-//	std::cout << "means: " << means_ << std::endl;
-//	std::cout << "cov: " << cov_ << std::endl;
-//	std::cout << "det: " << det_Sigma_ << std::endl;
+	std::cout << "means: " << means_ << std::endl;
+	std::cout << "cov: " << cov_ << std::endl;
+	std::cout << "det: " << det_Sigma_ << std::endl;
 
     if (det_Sigma_ < 0.0)
       throw std::runtime_error("Gaussian covaraince matrix must have determinant>0.0.");
@@ -95,19 +95,23 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
   GaussianPdfNd GaussianAggregatorNd::GetPdf() const
   {
-//	std::cout << "get PDF" << std::endl;
+	std::cout << "get PDF" << std::endl;
 
     // Compute maximum likelihood mean and covariance matrix
-//	std::cout << "1sum: "<< sum_ << std::endl;
+	std::cout << "1sum: "<< sum_ << std::endl;
+	std::cout << "1squares: " << squares_ << std::endl;
     VectorXd means = sum_/sampleCount_;
-//    std::cout << "1means: "<< means << std::endl;
+    std::cout << "1means: "<< means << std::endl;
     MatrixXd variances(dim_, dim_);
     for (int i = 0; i < dim_; i++) {
       for (int j = 0; j < dim_; j++) {
-        variances(i, j) = squares_(i,j) / sampleCount_ - sum_(i) * sum_(j) / (sampleCount_*sampleCount_);
+//    	  std::cout << squares_(i,j) / sampleCount_ << std::endl;
+//    	  std::cout << sum_(i) / sampleCount_ * sum_(j) / sampleCount_ << std::endl;
+
+        variances(i, j) = squares_(i,j) / sampleCount_ - sum_(i) / sampleCount_ * sum_(j) / sampleCount_;
       }
     }
-
+    std::cout << "1covariance:" << variances << std::endl;
     // Adapt using conjugate prior
     double alpha = sampleCount_/(sampleCount_ + a_);
 
@@ -168,7 +172,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       }
     }
 
-//    std::cout << concreteData.GetDataPoint((int)index)[0] << " " << concreteData.GetDataPoint((int)index)[1] << " " << concreteData.GetTarget((int)index) << std::endl;
+//    std::cout << target[0] << " " << target[1] << " " << target[2] << " " << target[3] << " " << target[4] << " " << target[5] << std::endl;
 
     sampleCount_ += 1;
 
@@ -187,8 +191,8 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
     sampleCount_ += aggregator.sampleCount_;
 
-	std::cout << sum_ << std::endl;
-	std::cout << squares_ << std::endl;
+//	std::cout << sum_ << std::endl;
+//	std::cout << squares_ << std::endl;
 
   }
 

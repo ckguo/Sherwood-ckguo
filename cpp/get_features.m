@@ -37,13 +37,13 @@ features_array = horzcat(features, bounding_box - horzcat(i,i,j,j,k,k));
 
 features_array(~any(features, 2 ), : ) = []; % removes all rows with all zero
 
-fileID = fopen(output_filename,'w');
-
-format_string = '';
-for i=1:size(features_array,2)-1
-    format_string = strcat(format_string, '%4.4f\t');
-end
-format_string = strcat(format_string, '%4.4f\n');
-
-fprintf(fileID, format_string, transpose(features_array));
-end
+% fileID = fopen(output_filename,'w');
+% 
+% format_string = '';
+% for i=1:size(features_array,2)-1
+%     format_string = strcat(format_string, '%4.4f\t');
+% end
+% format_string = strcat(format_string, '%4.4f\n');
+% 
+% fprintf(fileID, format_string, transpose(features_array));
+% end

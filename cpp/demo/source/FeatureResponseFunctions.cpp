@@ -63,16 +63,19 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
   BoxOffsetFeatureResponse BoxOffsetFeatureResponse::CreateRandom(Random& random)
   {
 	std::srand((unsigned int) time(0));
-	VectorXf randomOffset = 50*VectorXf::Random(6);
+	Vector3f randomOffset = 50*Vector3f::Random();
     std::srand((unsigned int) time(0));
     Vector3f randomHalfBoxSize = 6*Vector3f::Random();
-	VectorXi intOffset = randomOffset.cast<int>();
+	Vector3i intOffset = randomOffset.cast<int>();
 	Vector3i intHalfBoxSize = randomHalfBoxSize.cwiseAbs().cast<int>();
+//	Vector3i intHalfBoxSize;
+//	intHalfBoxSize << 3, 5, 7;
 
     return BoxOffsetFeatureResponse(intOffset, intHalfBoxSize);
   }
 
   nifti_image * nim = nifti_image_read("../../dataset_full/training_axial_full_resampled_pat0.nii.gz", 1);
+//  nifti_image * nim = nifti_image_read("../../pat0-subvolume.nii.gz", 1);
   double * BoxOffsetFeatureResponse::dataset_ = (double*)nim->data;
 //  std::cout << "hi" << std::endl;
 
@@ -81,6 +84,8 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 	  int dimx = nim->nx;
 	  int dimy = nim->ny;
 	  int dimz = nim->nz;
+
+//	  std::cout << dimx << " " << dimy << " " << dimz << " " << std::endl;
 
 	  i = std::max(0, std::min(dimx-1, i));
 	  j = std::max(0, std::min(dimy-1, j));
@@ -115,11 +120,15 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
         }
     }
 
+    // mapping:
+    // here i,j,k -> matlab k, 339-i, 339-j
+
+//    std::cout << dataset_[i + dimx*j + dimx*dimy*k] << std::endl;
 
     // check if numbers are right
 //    std::cout << sum/count << std::endl;
 //    std::cout << count << std::endl;
-
+//
 //	  std::cout << offset_ << std::endl;
 //	  std::cout << halfBoxSize_ << std::endl;
 //	  std::cout << "end" << std::endl;

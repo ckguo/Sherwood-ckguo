@@ -97,14 +97,14 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
   class BoxOffsetFeatureResponse
     {
-	  Eigen::VectorXi offset_;
+	  Eigen::Vector3i offset_;
 	  Eigen::Vector3i halfBoxSize_;
 	  static double * dataset_;
 
     public:
       BoxOffsetFeatureResponse()
       {
-        offset_ = Eigen::VectorXi::Zero(6);
+        offset_ = Eigen::Vector3i::Zero();
         halfBoxSize_ = Eigen::Vector3i::Zero();
       }
 
@@ -112,7 +112,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       /// Create an AxisAlignedFeatureResponse instance for the specified axis.
       /// </summary>
       /// <param name="axis">The zero-based index of the axis.</param>
-      BoxOffsetFeatureResponse(Eigen::VectorXi offset, Eigen::Vector3i halfBoxSize)
+      BoxOffsetFeatureResponse(Eigen::Vector3i offset, Eigen::Vector3i halfBoxSize)
       {
         offset_ = offset;
         halfBoxSize_ = halfBoxSize;

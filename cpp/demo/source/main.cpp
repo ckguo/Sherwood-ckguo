@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
 
     // Override defaults
     T.Value = 1;
-    D.Value = 1;
+    D.Value = 2;
     a.Value = 0;
     b.Value = 900;
 
@@ -129,11 +129,11 @@ int main(int argc, char* argv[])
 //	  *trainingData.get(), parameters);
 
     PointF plotDilation(plotPaddingX.Value, plotPaddingY.Value);
-    std::auto_ptr<Bitmap<PixelBgr> > result = RegressionGaussianExampleNd::Visualize(*forest.get(), *trainingData.get(), Size(300,300), plotDilation);
+//    std::auto_ptr<Bitmap<PixelBgr> > result = RegressionGaussianExampleNd::Visualize(*forest.get(), *trainingData.get(), Size(300,300), plotDilation);
 //	std::auto_ptr<Bitmap<PixelBgr> > result = RegressionExample::Visualize(*forest.get(), *trainingData.get(), Size(300,300), plotDilation);
 
     std::cout << "\nSaving output image to result.dib" << std::endl;
-    result->Save("result.dib");
+//    result->Save("result.dib");
   }
   else
   {

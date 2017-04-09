@@ -47,6 +47,8 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
     double GetProbability(Eigen::VectorXd& x) const;
 
+    double GetMarginalProbability(unsigned int dimIndex, double x) const;
+
     double GetNegativeLogProbability(Eigen::VectorXd& x) const;
 
     double Entropy() const;

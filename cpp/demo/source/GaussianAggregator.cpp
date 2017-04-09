@@ -42,6 +42,11 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     return pow(2.0 * 3.14159265, -0.5*dim_) * pow(det_Sigma_, -0.5) * exp(exponent);
   }
 
+  double GaussianPdfNd::GetMarginalProbability(unsigned int dimIndex, double x) const
+  {
+
+  }
+
   double GaussianPdfNd::GetNegativeLogProbability(Eigen::VectorXd& x) const
   {
 //	std::cout << "PDF get negative log probability" << std::endl;

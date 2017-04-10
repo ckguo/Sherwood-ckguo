@@ -11,16 +11,16 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
   GaussianPdfNd::GaussianPdfNd(unsigned int dim, VectorXd& means, MatrixXd& cov)
   {
-	std::cout << "create PDF" << std::endl;
+//	std::cout << "create PDF" << std::endl;
     dim_ = dim;
 	means_ = means;
 	cov_ = cov;
 
 	det_Sigma_ = cov_.determinant();
 
-	std::cout << "means: " << means_ << std::endl;
-	std::cout << "cov: " << cov_ << std::endl;
-	std::cout << "det: " << det_Sigma_ << std::endl;
+//	std::cout << "means: " << means_ << std::endl;
+//	std::cout << "cov: " << cov_ << std::endl;
+//	std::cout << "det: " << det_Sigma_ << std::endl;
 
     if (det_Sigma_ < 0.0)
       throw std::runtime_error("Gaussian covaraince matrix must have determinant>0.0.");
@@ -44,6 +44,9 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
   double GaussianPdfNd::GetMarginalProbability(unsigned int dimIndex, double x) const
   {
+	double exponent = (x - means_(dimIndex))*(x - means_(dimIndex))/(-2*cov_(dimIndex,dimIndex));
+
+	return pow(2.0 * 3.14159265 * cov_(dimIndex, dimIndex), -0.5) * exp(exponent);
 
   }
 
@@ -100,13 +103,13 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
   GaussianPdfNd GaussianAggregatorNd::GetPdf() const
   {
-	std::cout << "get PDF" << std::endl;
+//	std::cout << "get PDF" << std::endl;
 
     // Compute maximum likelihood mean and covariance matrix
-	std::cout << "1sum: "<< sum_ << std::endl;
-	std::cout << "1squares: " << squares_ << std::endl;
+//	std::cout << "1sum: "<< sum_ << std::endl;
+//	std::cout << "1squares: " << squares_ << std::endl;
     VectorXd means = sum_/sampleCount_;
-    std::cout << "1means: "<< means << std::endl;
+//    std::cout << "1means: "<< means << std::endl;
     MatrixXd variances(dim_, dim_);
     for (int i = 0; i < dim_; i++) {
       for (int j = 0; j < dim_; j++) {
@@ -116,7 +119,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
         variances(i, j) = squares_(i,j) / sampleCount_ - sum_(i) / sampleCount_ * sum_(j) / sampleCount_;
       }
     }
-    std::cout << "1covariance:" << variances << std::endl;
+//    std::cout << "1covariance:" << variances << std::endl;
     // Adapt using conjugate prior
     double alpha = sampleCount_/(sampleCount_ + a_);
 

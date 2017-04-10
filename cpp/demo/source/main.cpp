@@ -79,6 +79,7 @@ int main(int argc, char* argv[])
     parser.SetCommand("SW " + toUpper(mode));
 
     parser.AddArgument(trainingDataPath);
+    parser.AddArgument(testDataPath);
     parser.AddSwitch("T", T);
     parser.AddSwitch("D", D);
     parser.AddSwitch("F", F);
@@ -119,6 +120,13 @@ int main(int argc, char* argv[])
 	  6,
       DataDescriptor::HasTargetValues ) );
 
+    std::auto_ptr<DataPointCollection> testingData = std::auto_ptr<DataPointCollection>(LoadTrainingData(
+      testDataPath.Value,
+      REGRESSION_DATA_PATH + "/" + testDataPath.Value,
+      4,
+	  6,
+      DataDescriptor::HasTargetValues ) );
+
     if (trainingData.get()==0)
       return 0; // LoadTrainingData() generates its own progress/error messages
 
@@ -129,7 +137,7 @@ int main(int argc, char* argv[])
 //	  *trainingData.get(), parameters);
 
     PointF plotDilation(plotPaddingX.Value, plotPaddingY.Value);
-//    std::auto_ptr<Bitmap<PixelBgr> > result = RegressionGaussianExampleNd::Visualize(*forest.get(), *trainingData.get(), Size(300,300), plotDilation);
+    std::auto_ptr<Bitmap<PixelBgr> > result = RegressionGaussianExampleNd::Visualize(*forest.get(), *trainingData.get(), *testingData.get(), Size(300,300), plotDilation);
 //	std::auto_ptr<Bitmap<PixelBgr> > result = RegressionExample::Visualize(*forest.get(), *trainingData.get(), Size(300,300), plotDilation);
 
     std::cout << "\nSaving output image to result.dib" << std::endl;

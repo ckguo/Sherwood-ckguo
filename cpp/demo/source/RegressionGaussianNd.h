@@ -92,19 +92,19 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       Size PlotSize,
       PointF PlotDilation )
     {
-    	double hist[6][400];
+    	double hist[6][400] = {{0}};
 
 		std::vector<std::vector<int> > leafNodeIndices;
 		forest.Apply(testingData, leafNodeIndices);
 
-//		int dx = 340;
-//		int dy = 340;
-//		int dz = 133;
 		int dims[6] = {340, 340, 340, 340, 133, 133};
 		for (int i = 0; i< testingData.Count(); i++) {
+			if (i%50 == 0) {
+				std::cout << "i = " << i << std::endl;
+			}
 		    const float* datum = testingData.GetDataPoint(i);
 			for (int dim = 0; dim < 6; dim ++) {
-				for (int j = 0; j < dims[dim]; j++) {
+				for (int j = 0; j < dims[dim]; j+=3) {
 					for (int t = 0; t < forest.TreeCount(); t++) {
 						Node<BoxOffsetFeatureResponse, GaussianAggregatorNd> leafNodeCopy = forest.GetTree((t)).GetNode(leafNodeIndices[t][i]);
 

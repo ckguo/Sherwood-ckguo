@@ -8,6 +8,7 @@
 #include <string>
 #include <Eigen/Core>
 #include <nifti1_io.h>
+#include <mutex>
 
 #include "Sherwood.h"
 
@@ -99,7 +100,10 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     {
 	  Eigen::Vector3i offset_;
 	  Eigen::Vector3i halfBoxSize_;
-	  static double * dataset_;
+	  static double * datasets_[10];
+	  static int dimensions_[10][3];
+	  static bool loadFlag_;
+	  static std::mutex mtx_;
 
     public:
       BoxOffsetFeatureResponse()
@@ -117,6 +121,8 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
         offset_ = offset;
         halfBoxSize_ = halfBoxSize;
       }
+
+      static void LoadDatasets();
 
       static float ValueAtPixel(int patient, int i, int j, int k);
 

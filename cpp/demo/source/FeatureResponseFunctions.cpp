@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <algorithm>
+#include <string>
 
 #include <sstream>
 #include <Eigen/Core>
@@ -62,6 +63,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 
   BoxOffsetFeatureResponse BoxOffsetFeatureResponse::CreateRandom(Random& random)
   {
+	  LoadDatasets();
 	std::srand((unsigned int) time(0));
 	Vector3f randomOffset = 50*Vector3f::Random();
     std::srand((unsigned int) time(0));
@@ -74,23 +76,47 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
     return BoxOffsetFeatureResponse(intOffset, intHalfBoxSize);
   }
 
-  nifti_image * nim = nifti_image_read("../../dataset_full/training_axial_full_resampled_pat0.nii.gz", 1);
+  double * BoxOffsetFeatureResponse::datasets_[10];
+  int BoxOffsetFeatureResponse::dimensions_[10][3];
+  std::mutex BoxOffsetFeatureResponse::mtx_;
+  bool BoxOffsetFeatureResponse::loadFlag_ = false;
+
+  void BoxOffsetFeatureResponse::LoadDatasets() {
+	  BoxOffsetFeatureResponse::mtx_.lock();
+	  if (loadFlag_) {
+		  BoxOffsetFeatureResponse::mtx_.unlock();
+		  return;
+	  }
+	  for (int i = 0; i < 10; i++) {
+		  std::string filename = "../../dataset_full/training_axial_full_resampled_pat" + std::to_string(i) + ".nii.gz";
+		  nifti_image * nim = nifti_image_read(filename.c_str(), 1);
+		  datasets_[i] = (double*)nim->data;
+		  dimensions_[i][0] = nim -> nx;
+		  dimensions_[i][1] = nim -> ny;
+		  dimensions_[i][2] = nim -> nz;
+	  }
+	  BoxOffsetFeatureResponse::mtx_.unlock();
+  }
+
+//  nifti_image * nim = nifti_image_read("../../dataset_full/training_axial_full_resampled_pat0.nii.gz", 1);
 //  nifti_image * nim = nifti_image_read("../../pat0-subvolume.nii.gz", 1);
-  double * BoxOffsetFeatureResponse::dataset_ = (double*)nim->data;
+//  double * BoxOffsetFeatureResponse::datasets[10];
+
+//  double * BoxOffsetFeatureResponse::dataset_ = (double*)nim->data;
 //  std::cout << "hi" << std::endl;
 
   // returns the value at the pixel, if it is out of bounds it will return a padded value
   float BoxOffsetFeatureResponse::ValueAtPixel(int patient, int i, int j, int k) {
-	  int dimx = nim->nx;
-	  int dimy = nim->ny;
-	  int dimz = nim->nz;
+	  int dimx = dimensions_[patient][0];
+	  int dimy = dimensions_[patient][1];
+	  int dimz = dimensions_[patient][2];
 
 //	  std::cout << dimx << " " << dimy << " " << dimz << " " << std::endl;
 
 	  i = std::max(0, std::min(dimx-1, i));
 	  j = std::max(0, std::min(dimy-1, j));
 	  k = std::max(0, std::min(dimz-1, k));
-	  double val = dataset_[i + dimx*j + dimx*dimy*k];
+	  double val = datasets_[patient][i + dimx*j + dimx*dimy*k];
 //	  if (val != 0) {
 //		  std::cout << "value at pixel" << val << std::endl;
 //	  }

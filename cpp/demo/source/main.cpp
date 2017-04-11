@@ -90,8 +90,8 @@ int main(int argc, char* argv[])
     parser.AddSwitch("VERBOSE", verboseSwitch);
 
     // Override defaults
-    T.Value = 1;
-    D.Value = 2;
+    T.Value = 10;
+    D.Value = 4;
     a.Value = 0;
     b.Value = 900;
 

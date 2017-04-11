@@ -1,0 +1,61 @@
+\documentclass[sigconf,12pt]{acmart}
+\usepackage{setspace}
+\usepackage{booktabs} % For formal tables
+\usepackage{times}
+\usepackage[outdir=./]{epstopdf}
+% Copyright
+\setcopyright{none}
+
+%Conference
+\acmConference[6UAR'17]{MIT 6.UAR}{MAY 2017}{
+  Cambridge, Massachusetts} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%  Your Edits Below  %%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\title{Your Title Here}
+
+\author{Courtney Guo}
+\affiliation{%
+  \institution{Massachusetts Institute of Technology}
+}
+\email{ckguo@mit.edu}
+
+\author{Danielle Pace}
+\affiliation{%
+  \institution{Massachusetts Institute of Technology}
+}
+\email{dfpace@csail.mit.edu}
+
+\author{Polina Golland}
+\affiliation{%
+  \institution{Massachusetts Institute of Technology}
+}
+\email{polina@csail.mit.edu}
+
+
+\begin{abstract}
+\doublespacing
+Congenital heart disease (CHD) affects many chil0dren around the world, which sometimes require extensive surgery planning. For doctors to be able to plan surgeries, scans of the heart must be accurately labelled with the different substructures of the heart. This project aims to develop methods to localize internal structures in the heart in MRI scans of patients with congenital heart disease. Localization will be done by applying a regression forest to the MRI scans of the patient, to find the bounding boxes of the structures within the heart. A regression forest is a supervised machine learning model that is a collection of regression trees, which is described later in the technical approach. %\footnote{This is an abstract footnote}
+\end{abstract}
+
+
+\maketitle
+
+\begin{doublespacing}
+%If you would like to sections to be split across multiple files,
+%add them below in the same format as samplebody.
+\input{samplebody}
+
+
+\end{doublespacing}
+
+%If your citations are not being added properly, the solution may be in README
+\bibliographystyle{abbrv}
+\bibliography{sample_bib}
+
+\end{document}

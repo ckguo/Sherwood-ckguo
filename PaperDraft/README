@@ -1,0 +1,50 @@
+HOW TO INSTALL AND COMPILE THE PAPER
+This package provides all of the files necessary to compile
+the enclosed files with Latex.
+
+In order to properly compile the Latex files you will need
+to have software already installed on your computer.
+General Instructions can be found at this link.
+
+https://www.tug.org/texlive/
+
+MAC
+To do so on a Mac, it's easiest to use MacPorts.
+Once MacPorts is installed, you will need to install the
+packages texlive-latex and texlive-latex-extra.
+Instructions to do each of these can be found at the link
+below.
+
+https://guide.macports.org/
+
+UBUNTU
+You will need two packages texlive-latex and texlive-latex-extra.
+You can install them both with the command below.
+
+sudo apt-get install texlive-latex
+
+Once Latex is installed on MAC or UBUNTU, to compile the set of
+files, run the commands:
+
+pdflatex sample.tex
+bibtex sample
+pdflatex sample.tex
+pdflatex sample.tex
+
+At this point, you should have a pdf called sample.pdf with all
+figures and references properly compiled.  Compare your output
+to sample_to_compare.pdf to make sure the compilation was done
+correctly.  If so, you can start editing your own paper.
+
+EDITING YOUR PAPER
+Now you should be able to properly compile the paper.
+There are 3 files you should edit, sample.tex, samplebody.tex
+and sample_bib.tex.  Feel free to replace and rename them once
+you start working on your own paper.  If you would like to work 
+on sections separately, you can also break out sections into 
+their own intro-1.tex documents and reference them with 
+\input{intro-1}.  This is the same as how samplebody is included.
+
+Citations:
+If your paper does not propoerly include citations, you need to run
+bibtex <filename> to create the file for pdflatex to link to.

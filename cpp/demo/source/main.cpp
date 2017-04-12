@@ -90,8 +90,8 @@ int main(int argc, char* argv[])
     parser.AddSwitch("VERBOSE", verboseSwitch);
 
     // Override defaults
-    T.Value = 10;
-    D.Value = 4;
+    T.Value = 1;
+    D.Value = 3;
     a.Value = 0;
     b.Value = 900;
 
@@ -137,6 +137,7 @@ int main(int argc, char* argv[])
 //	  *trainingData.get(), parameters);
 
     PointF plotDilation(plotPaddingX.Value, plotPaddingY.Value);
+    std::cout << "visualize" << std::endl;
     std::auto_ptr<Bitmap<PixelBgr> > result = RegressionGaussianExampleNd::Visualize(*forest.get(), *trainingData.get(), *testingData.get(), Size(300,300), plotDilation);
 //	std::auto_ptr<Bitmap<PixelBgr> > result = RegressionExample::Visualize(*forest.get(), *trainingData.get(), Size(300,300), plotDilation);
 

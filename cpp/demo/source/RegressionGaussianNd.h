@@ -81,7 +81,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       std::auto_ptr<Forest<BoxOffsetFeatureResponse, GaussianAggregatorNd> > forest
         = ForestTrainer<BoxOffsetFeatureResponse, GaussianAggregatorNd>::TrainForest(
         random, parameters, regressionTrainingContext, trainingData);
-
+      std::cout << "finished training" << std::endl;
       return forest;
     }
 

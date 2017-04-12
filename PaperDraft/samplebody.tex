@@ -75,4 +75,7 @@ where $B$ is the set of voxels that lie in the box that is described by an offse
 
 To generate a random feature, we sample $\theta$ and $\phi$ from uniform distributions. Each element of $\theta$ is sampled from a uniform distribution from 0 to a fixed fraction of the size of the image in that dimension. Each element of $\phi$ is sampled from a uniform distribution of 1 to $2k+1$ for some $k$. We have not been able to tune parameters much, and currently the parameters are set at $\frac{1}{6}$ of the image size for $\theta$, and $k = 5$ for $\phi$. 
 
+\subsection{Results}
+Our current results are limited by the fact that the code takes a long time to run on a laptop. We are currently trying to get the code running on machines with more computing power, but there are some compiling issues on Linux that have not yet been resolved. Therefore, we have some preliminary results for very small random forests.
+
 

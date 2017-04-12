@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-c -Wall -I lib -g -ggdb -O0 -ferror-limit=0
+CFLAGS=-c -Wall -I lib -g -ggdb -ferror-limit=0
 LDFLAGS=-I/usr/local/include -I/usr/local/include/nifticlib-2.0.0/include
 LIBFLAGS=-L/usr/local/include/nifticlib-2.0.0/lib -lfslio -lnifticdf -lniftiio -lznz -lz
 OUTDIR=bin/linux
@@ -22,7 +22,7 @@ all: $(SOURCES) $(EXECUTABLE)
 	cp -R demo/data $(OUTDIR)
 
 $(EXECUTABLE): $(OBJECTS)
-	mkdir -p $(OUTDIR)
+	mkdir -p $(OUTDIR)    
 	$(CC) $(LDFLAGS) $(LIBFLAGS) $(OBJECTS) -o $@
 
 .cpp.o:

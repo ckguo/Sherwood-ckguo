@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  11 APR 2017 02:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  11 APR 2017 23:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -916,20 +916,20 @@ Package Fancyhdr Warning: \headheight is too small (13.0pt):
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [2.2]
-<decisiontree.png, id=107, 374.39874pt x 525.965pt>
+<decisiontree.png, id=47, 374.39874pt x 525.965pt>
 File: decisiontree.png Graphic file (type png)
  <use decisiontree.png>
 Package pdftex.def Info: decisiontree.png used on input line 18.
 (pdftex.def)             Requested size: 187.19891pt x 262.98184pt.
 
-<regressionforest.png, id=109, 993.7125pt x 430.60875pt>
+<regressionforest.png, id=49, 993.7125pt x 430.60875pt>
 File: regressionforest.png Graphic file (type png)
 
 <use regressionforest.png>
 Package pdftex.def Info: regressionforest.png used on input line 25.
 (pdftex.def)             Requested size: 447.16649pt x 193.77214pt.
  [3.3 <./decisiontree.png>]
-<regressiontraining.png, id=117, 987.69pt x 396.48125pt>
+<regressiontraining.png, id=57, 987.69pt x 396.48125pt>
 File: regressiontraining.png Graphic file (type png)
 
 <use regressiontraining.png>
@@ -952,155 +952,44 @@ LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [5.5]
-[6.6]
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 91.
- (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/t1pcr.fd
-File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-)
-Package microtype Info: Loading generic settings for font family
-(microtype)             `pcr' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 10.0pt on input line 92.
-LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 7.3pt on input line 92.
-LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 5.5pt on input line 92.
-LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <12> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 105.
-LaTeX Font Info:    Font shape `T1/phv/b/it' in size <12> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 105.
-
-Underfull \vbox (badness 2057) has occurred while \output is active []
-
- [7.7]
-
-Package natbib Warning: Citation `Lamport' on page 8 undefined on input line 12
-4.
-
-LaTeX Font Info:    Font shape `T1/phv/m/it' in size <12> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 132.
-
-Package natbib Warning: Citation `Lamport' on page 8 undefined on input line 13
-9.
-
-[8.8]
-
-Package natbib Warning: Citation `bowman' on page 9 undefined on input line 175
-.
-
-
-Package natbib Warning: Citation `clark' on page 9 undefined on input line 175.
-
-
-
-Package natbib Warning: Citation `braams' on page 9 undefined on input line 175
-.
-
-
-Package natbib Warning: Citation `herlihy' on page 9 undefined on input line 17
-5.
-
-
-Package natbib Warning: Citation `clark' on page 9 undefined on input line 176.
-
-
-
-Package natbib Warning: Citation `Lamport' on page 9 undefined on input line 17
-7.
-
-
-Package natbib Warning: Citation `salas' on page 9 undefined on input line 177.
-
-
-
-Package natbib Warning: Citation `Lamport' on page 9 undefined on input line 18
-3.
-
-
-Package natbib Warning: Citation `Lamport' on page 9 undefined on input line 19
-4.
-
-
-Underfull \vbox (badness 1077) has occurred while \output is active []
-
- [9.9]
-
-Package natbib Warning: Citation `Fear05' on page 10 undefined on input line 25
-8.
-
-[10.10]
-LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <12> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 309.
-
-
-Package natbib Warning: Citation `Amsthm15' on page 11 undefined on input line 
-342.
-
-
-Underfull \vbox (badness 2293) has occurred while \output is active []
-
- [11.11]
-[12.12])
+[6.6])
 No file sample.bbl.
-
-Package natbib Warning: There were undefined citations.
-
-[13.13]
+[7.7]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 61.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 61.
  (./sample.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 61.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 61.
 Package rerunfilecheck Info: File `sample.out' has not changed.
-(rerunfilecheck)             Checksum: 6E527A0114E1E1CDD9518619717B66D3;3619.
+(rerunfilecheck)             Checksum: 00871FAEAE763E9A75F0D095C701A3FD;1237.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 61.
  ) 
 Here is how much of TeX's memory you used:
- 17111 strings out of 493089
- 254662 string characters out of 6134842
- 355927 words of memory out of 5000000
- 19866 multiletter control sequences out of 15000+600000
- 135249 words of font info for 309 fonts, out of 8000000 for 9000
+ 16860 strings out of 493089
+ 251065 string characters out of 6134842
+ 354804 words of memory out of 5000000
+ 19749 multiletter control sequences out of 15000+600000
+ 99318 words of font info for 247 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 60i,12n,94p,1102b,558s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Hfootnote.3} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist
-, replaced by a fixed one
-
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/tex
-live/2015/texmf-dist/fonts/enc/dvips/libertine/lbtn_ehpgim.enc}{/usr/local/texl
-ive/2015/texmf-dist/fonts/enc/dvips/newtx/libertinealt.enc}{/usr/local/texlive/
-2015/texmf-dist/fonts/enc/dvips/libertine/lbtn_c7kyj5.enc}</usr/local/texlive/2
-015/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb></usr/local/texli
-ve/2015/texmf-dist/fonts/type1/public/libertine/LinLibertineTZ.pfb></usr/local/
-texlive/2015/texmf-dist/fonts/type1/public/txfonts/rtxmi.pfb></usr/local/texliv
-e/2015/texmf-dist/fonts/type1/public/txfonts/rtxr.pfb></usr/local/texlive/2015/
-texmf-dist/fonts/type1/public/newtx/txex-bar.pfb></usr/local/texlive/2015/texmf
--dist/fonts/type1/public/txfonts/txex.pfb></usr/local/texlive/2015/texmf-dist/f
-onts/type1/public/txfonts/txsy.pfb></usr/local/texlive/2015/texmf-dist/fonts/ty
-pe1/public/txfonts/txsya.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/pu
-blic/txfonts/txsyc.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/cour
-ier/ucrb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr
-8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
-</usr/local/texlive/2015/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/
-local/texlive/2015/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/local/
-texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/20
-15/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-d
-ist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/
-type1/urw/times/utmri8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/pub
-lic/newtx/zxlr.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/newtx
-/zxlri.pfb>
-Output written on sample.pdf (13 pages, 708378 bytes).
+ 60i,12n,94p,1102b,496s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/libertine/lbtn_ehpgim.enc
+}{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/newtx/libertinealt.enc}{/u
+sr/local/texlive/2015/texmf-dist/fonts/enc/dvips/libertine/lbtn_c7kyj5.enc}{/us
+r/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive
+/2015/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb></usr/local/tex
+live/2015/texmf-dist/fonts/type1/public/libertine/LinLibertineTZ.pfb></usr/loca
+l/texlive/2015/texmf-dist/fonts/type1/public/txfonts/rtxmi.pfb></usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/txfonts/rtxr.pfb></usr/local/texlive/201
+5/texmf-dist/fonts/type1/public/txfonts/txex.pfb></usr/local/texlive/2015/texmf
+-dist/fonts/type1/public/txfonts/txsy.pfb></usr/local/texlive/2015/texmf-dist/f
+onts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/ty
+pe1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/ti
+mes/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/newtx/zxl
+r.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/newtx/zxlri.pfb>
+Output written on sample.pdf (7 pages, 624997 bytes).
 PDF statistics:
- 305 PDF objects out of 1000 (max. 8388607)
- 261 compressed objects within 3 object streams
- 69 named destinations out of 1000 (max. 500000)
- 45256 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 144 PDF objects out of 1000 (max. 8388607)
+ 116 compressed objects within 2 object streams
+ 24 named destinations out of 1000 (max. 500000)
+ 16976 words of extra memory for PDF output out of 17280 (max. 10000000)
 

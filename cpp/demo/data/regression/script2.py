@@ -19,7 +19,7 @@ matlab_dimensions = [[133, 340, 340],
                      [150, 386, 386],
                      [125, 340, 340],
                      [160, 340, 340]]
-pat = 6
+pat = 0
 matlab_bbox = matlab_bboxes[pat]
 matlab_dimension = matlab_dimensions[pat]
 dimx = matlab_dimension[1]

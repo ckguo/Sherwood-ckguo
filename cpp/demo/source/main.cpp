@@ -31,10 +31,7 @@ std::auto_ptr<DataPointCollection> LoadTrainingData(
   DataDescriptor::e descriptor);
 
 // Store (Linux-friendly) relative paths to training data
-const std::string CLAS_DATA_PATH = "/data/supervised classification";
-const std::string SSCLAS_DATA_PATH = "/data/semi-supervised classification";
-const std::string REGRESSION_DATA_PATH = "/data/regression";
-const std::string DENSITY_DATA_PATH = "/data/density estimation";
+const std::string REGRESSION_DATA_PATH = "demo/data/regression";
 
 int main(int argc, char* argv[])
 {
@@ -75,7 +72,6 @@ int main(int argc, char* argv[])
   {
     // Regression
     CommandLineParser parser;
-    int i = 0;
     parser.SetCommand("SW " + toUpper(mode));
 
     parser.AddArgument(trainingDataPath);
@@ -90,8 +86,8 @@ int main(int argc, char* argv[])
     parser.AddSwitch("VERBOSE", verboseSwitch);
 
     // Override defaults
-    T.Value = 1;
-    D.Value = 3;
+//    T.Value = 1;
+//    D.Value = 2;
     a.Value = 0;
     b.Value = 900;
 
@@ -114,14 +110,14 @@ int main(int argc, char* argv[])
 
     // Load training data for a 2D density estimation problem.
     std::auto_ptr<DataPointCollection> trainingData = std::auto_ptr<DataPointCollection>(LoadTrainingData(
-      trainingDataPath.Value,
+      REGRESSION_DATA_PATH + "/" + trainingDataPath.Value,
       REGRESSION_DATA_PATH + "/" + trainingDataPath.Value,
       4,
 	  6,
       DataDescriptor::HasTargetValues ) );
 
     std::auto_ptr<DataPointCollection> testingData = std::auto_ptr<DataPointCollection>(LoadTrainingData(
-      testDataPath.Value,
+      REGRESSION_DATA_PATH + "/" + trainingDataPath.Value,
       REGRESSION_DATA_PATH + "/" + testDataPath.Value,
       4,
 	  6,
@@ -136,13 +132,15 @@ int main(int argc, char* argv[])
 //	std::auto_ptr<Forest<AxisAlignedFeatureResponse, LinearFitAggregator1d> > forest = RegressionExample::Train(
 //	  *trainingData.get(), parameters);
 
-    PointF plotDilation(plotPaddingX.Value, plotPaddingY.Value);
+//    PointF plotDilation(plotPaddingX.Value, plotPaddingY.Value);
     std::cout << "visualize" << std::endl;
-    std::auto_ptr<Bitmap<PixelBgr> > result = RegressionGaussianExampleNd::Visualize(*forest.get(), *trainingData.get(), *testingData.get(), Size(300,300), plotDilation);
+
+    std::ostringstream filenameStream;
+    filenameStream << "T" << parameters.NumberOfTrees << "D" << parameters.MaxDecisionLevels << testDataPath.Value;
+    std::string filename = filenameStream.str();
+    RegressionGaussianExampleNd::Visualize(*forest.get(), *trainingData.get(), *testingData.get(), filename);
 //	std::auto_ptr<Bitmap<PixelBgr> > result = RegressionExample::Visualize(*forest.get(), *trainingData.get(), Size(300,300), plotDilation);
 
-    std::cout << "\nSaving output image to result.dib" << std::endl;
-//    result->Save("result.dib");
   }
   else
   {

@@ -86,12 +86,11 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       return forest;
     }
 
-    static std::auto_ptr<Bitmap<PixelBgr> > Visualize(
+    static void Visualize(
       Forest<BoxOffsetFeatureResponse, GaussianAggregatorNd>& forest,
       const DataPointCollection& trainingData,
 	  const DataPointCollection& testingData,
-      Size PlotSize,
-      PointF PlotDilation )
+	  std::string filename)
     {
     	double hist[6][400] = {{0}};
 
@@ -105,7 +104,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 			}
 		    const float* datum = testingData.GetDataPoint(i);
 			for (int dim = 0; dim < 6; dim ++) {
-				for (int j = 0; j < dims[dim]; j+=3) {
+				for (int j = 0; j < dims[dim]; j++) {
 					for (int t = 0; t < forest.TreeCount(); t++) {
 						Node<BoxOffsetFeatureResponse, GaussianAggregatorNd> leafNodeCopy = forest.GetTree((t)).GetNode(leafNodeIndices[t][i]);
 
@@ -117,7 +116,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 			}
 		}
 		std::ofstream myfile;
-		myfile.open ("output.txt");
+		myfile.open(filename);
 		double maxProb[6];
 		int maxInd[6];
 		for (int dim = 0; dim < 6; dim ++) {

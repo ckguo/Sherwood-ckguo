@@ -1,4 +1,3 @@
-w = open('test_1.txt', 'w')
 matlab_bboxes = [[1, 123, 122, 220, 129, 296],
                  [4, 115, 123, 215, 102, 260],
                  [4, 155, 115, 205, 81, 253],
@@ -20,6 +19,7 @@ matlab_dimensions = [[133, 340, 340],
                      [125, 340, 340],
                      [160, 340, 340]]
 pat = 0
+w = open('pat' + str(pat) + '.txt', 'w')
 matlab_bbox = matlab_bboxes[pat]
 matlab_dimension = matlab_dimensions[pat]
 dimx = matlab_dimension[1]

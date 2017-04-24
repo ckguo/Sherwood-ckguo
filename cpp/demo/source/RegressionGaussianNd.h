@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <cctype>
 #include <sstream>
+#include <fstream>
 
 #include "PlotCanvas.h"
 #include "Graphics.h"
@@ -115,17 +116,23 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 				}
 			}
 		}
+		std::ofstream myfile;
+		myfile.open ("output.txt");
 		double maxProb[6];
 		int maxInd[6];
 		for (int dim = 0; dim < 6; dim ++) {
 			for (int j = 0; j < dims[dim]; j++) {
+				myfile << hist[dim][j] << " ";
 				if (hist[dim][j] > maxProb[dim]) {
 					maxProb[dim] = hist[dim][j];
 					maxInd[dim] = j;
 				}
 			}
+			myfile << "\n";
 			std::cout << dim << " " << maxProb[dim] << " " << maxInd[dim] << std::endl;
 		}
+
+		myfile.close();
 	// Generate some test samples in a grid pattern (a useful basis for creating visualization images)
 //		  PlotCanvas plotCanvas(trainingData.GetRange(0), trainingData.GetTargetRange(), PlotSize, PlotDilation);
 //

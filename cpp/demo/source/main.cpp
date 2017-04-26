@@ -110,14 +110,14 @@ int main(int argc, char* argv[])
 
     // Load training data for a 2D density estimation problem.
     std::auto_ptr<DataPointCollection> trainingData = std::auto_ptr<DataPointCollection>(LoadTrainingData(
-      REGRESSION_DATA_PATH + "/" + trainingDataPath.Value,
+      trainingDataPath.Value,
       REGRESSION_DATA_PATH + "/" + trainingDataPath.Value,
       4,
 	  6,
       DataDescriptor::HasTargetValues ) );
 
     std::auto_ptr<DataPointCollection> testingData = std::auto_ptr<DataPointCollection>(LoadTrainingData(
-      REGRESSION_DATA_PATH + "/" + trainingDataPath.Value,
+      testDataPath.Value,
       REGRESSION_DATA_PATH + "/" + testDataPath.Value,
       4,
 	  6,

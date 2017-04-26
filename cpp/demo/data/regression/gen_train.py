@@ -19,8 +19,9 @@ matlab_dimensions = [[133, 340, 340],
                      [125, 340, 340],
                      [160, 340, 340]]
 
-test_pat = 0
-w = open('train_without' + str(test_pat) + '.txt', 'w')
+test_pat = 2
+coarseness = [5,5,5]
+w = open('train_without' + str(test_pat) + '_' + str(coarseness[0]) + str(coarseness[1]) + str(coarseness[2]) + '.txt', 'w')
 
 for pat in range(10):
     if pat == test_pat:
@@ -32,9 +33,9 @@ for pat in range(10):
     dimz = matlab_dimension[0]
     s_bbox = [dimx-matlab_bbox[3], dimx-matlab_bbox[2], dimy-matlab_bbox[5], dimy-matlab_bbox[4], matlab_bbox[0]-1, matlab_bbox[1]-1]
     print s_bbox
-    for i in range(0,matlab_dimension[1],1):
-        for j in range(0,matlab_dimension[2],1):
-            for k in range(0,matlab_dimension[0],1):
+    for i in range(0,matlab_dimension[1],coarseness[0]):
+        for j in range(0,matlab_dimension[2],coarseness[1]):
+            for k in range(0,matlab_dimension[0],coarseness[2]):
                 vals = [pat, i, j, k, s_bbox[0]-i, s_bbox[1]-i, s_bbox[2]-j, s_bbox[3]-j, s_bbox[4]-k, s_bbox[5]-k]
                 w.write('\t'.join([str(x) for x in vals]) + '\n')
 w.close()

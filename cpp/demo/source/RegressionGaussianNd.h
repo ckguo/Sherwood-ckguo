@@ -92,6 +92,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 	  const DataPointCollection& testingData,
 	  std::string filename)
     {
+
     	double hist[6][400] = {{0}};
 
 		std::vector<std::vector<int> > leafNodeIndices;
@@ -132,6 +133,12 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 		}
 
 		myfile.close();
+/*
+		std::ofstream myfile;
+		myfile.open(filename);
+		myfile << "hi";
+		myfile.close();
+*/
 	// Generate some test samples in a grid pattern (a useful basis for creating visualization images)
 //		  PlotCanvas plotCanvas(trainingData.GetRange(0), trainingData.GetTargetRange(), PlotSize, PlotDilation);
 //

@@ -49,6 +49,7 @@ int main(int argc, char* argv[])
   StringParameter forestPath("forest", "Path of file containing forest.");
   StringParameter testDataPath("data", "Path of file containing test data.");
   StringParameter outputPath("output", "Path of file containing output.");
+  StringParameter outputIdentifier("outputIdentifier", "Suffix of output filename");
   NaturalParameter T("t", "No. of trees in the forest (default = {0}).", 10);
   NaturalParameter D("d", "Maximum tree levels (default = {0}).", 10, 20);
   NaturalParameter F("f", "No. of candidate feature response functions per split node (default = {0}).", 10);
@@ -76,6 +77,8 @@ int main(int argc, char* argv[])
 
     parser.AddArgument(trainingDataPath);
     parser.AddArgument(testDataPath);
+    parser.AddArgument(outputPath);
+    parser.AddArgument(outputIdentifier);
     parser.AddSwitch("T", T);
     parser.AddSwitch("D", D);
     parser.AddSwitch("F", F);
@@ -136,8 +139,9 @@ int main(int argc, char* argv[])
     std::cout << "visualize" << std::endl;
 
     std::ostringstream filenameStream;
-    filenameStream << "T" << parameters.NumberOfTrees << "D" << parameters.MaxDecisionLevels << testDataPath.Value;
+    filenameStream << "/" << outputPath.Value << "/T" << parameters.NumberOfTrees << "D" << parameters.MaxDecisionLevels << outputIdentifier.Value;
     std::string filename = filenameStream.str();
+    std::cout << filename << std::endl;
     RegressionGaussianExampleNd::Visualize(*forest.get(), *trainingData.get(), *testingData.get(), filename);
 //	std::auto_ptr<Bitmap<PixelBgr> > result = RegressionExample::Visualize(*forest.get(), *trainingData.get(), Size(300,300), plotDilation);
 

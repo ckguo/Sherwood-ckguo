@@ -90,6 +90,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       Forest<BoxOffsetFeatureResponse, GaussianAggregatorNd>& forest,
       const DataPointCollection& trainingData,
 	  const DataPointCollection& testingData,
+	  int patNum,
 	  std::string filename)
     {
 
@@ -98,14 +99,24 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 		std::vector<std::vector<int> > leafNodeIndices;
 		forest.Apply(testingData, leafNodeIndices);
 
-		int dims[6] = {340, 340, 340, 340, 133, 133};
+		int dims[10][6] = {{340,340,340,340,133,133},
+						   {320, 320, 320, 320, 129, 129},
+						   {340, 340, 340, 340, 178, 178},
+						   {440, 440, 440, 440, 184, 184},
+						   {270, 270, 270, 270, 91, 91},
+						   {270, 270, 270, 270, 117, 117},
+						   {386, 386, 386, 386, 113, 113},
+						   {386, 386, 386, 386, 150, 150},
+						   {340, 340, 340, 340, 125, 125},
+						   {340, 340, 340, 340, 160, 160}};
+
 		for (int i = 0; i< testingData.Count(); i++) {
 			if (i%50 == 0) {
 				std::cout << "i = " << i << std::endl;
 			}
 		    const float* datum = testingData.GetDataPoint(i);
 			for (int dim = 0; dim < 6; dim ++) {
-				for (int j = 0; j < dims[dim]; j++) {
+				for (int j = 0; j < dims[patNum][dim]; j++) {
 					for (int t = 0; t < forest.TreeCount(); t++) {
 						Node<BoxOffsetFeatureResponse, GaussianAggregatorNd> leafNodeCopy = forest.GetTree((t)).GetNode(leafNodeIndices[t][i]);
 

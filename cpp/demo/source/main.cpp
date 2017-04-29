@@ -50,6 +50,7 @@ int main(int argc, char* argv[])
   StringParameter testDataPath("data", "Path of file containing test data.");
   StringParameter outputPath("output", "Path of file containing output.");
   StringParameter outputIdentifier("outputIdentifier", "Suffix of output filename");
+  NaturalParameter P("p", "Patient number (default = {0})", 0);
   NaturalParameter T("t", "No. of trees in the forest (default = {0}).", 10);
   NaturalParameter D("d", "Maximum tree levels (default = {0}).", 10, 20);
   NaturalParameter F("f", "No. of candidate feature response functions per split node (default = {0}).", 10);
@@ -79,6 +80,7 @@ int main(int argc, char* argv[])
     parser.AddArgument(testDataPath);
     parser.AddArgument(outputPath);
     parser.AddArgument(outputIdentifier);
+    parser.AddSwitch("P", P);
     parser.AddSwitch("T", T);
     parser.AddSwitch("D", D);
     parser.AddSwitch("F", F);

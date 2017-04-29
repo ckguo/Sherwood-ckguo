@@ -19,8 +19,8 @@ matlab_dimensions = [[133, 340, 340],
                      [125, 340, 340],
                      [160, 340, 340]]
 
-test_pat = 2
-coarseness = [5,5,5]
+test_pat = 9
+coarseness = [9,9,9]
 w = open('train_without' + str(test_pat) + '_' + str(coarseness[0]) + str(coarseness[1]) + str(coarseness[2]) + '.txt', 'w')
 
 for pat in range(10):

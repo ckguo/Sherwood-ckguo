@@ -95,7 +95,8 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 		  dimensions_[i][1] = nim -> ny;
 		  dimensions_[i][2] = nim -> nz;
 	  }
-	  BoxOffsetFeatureResponse::mtx_.unlock();
+	loadFlag_ = true;  
+	BoxOffsetFeatureResponse::mtx_.unlock();
   }
 
 //  nifti_image * nim = nifti_image_read("../../dataset_full/training_axial_full_resampled_pat0.nii.gz", 1);

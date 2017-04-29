@@ -19,7 +19,7 @@ matlab_dimensions = [[133, 340, 340],
                      [125, 340, 340],
                      [160, 340, 340]]
 pat = 9
-coarseness = [5, 5, 5]
+coarseness = [9, 9, 9]
 w = open('pat' + str(pat) + '_'+ str(coarseness[0]) + str(coarseness[1]) + str(coarseness[2]) +  '.txt', 'w')
 matlab_bbox = matlab_bboxes[pat]
 matlab_dimension = matlab_dimensions[pat]

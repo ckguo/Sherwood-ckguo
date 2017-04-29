@@ -132,7 +132,7 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 		double maxProb[6];
 		int maxInd[6];
 		for (int dim = 0; dim < 6; dim ++) {
-			for (int j = 0; j < dims[dim]; j++) {
+			for (int j = 0; j < dims[patNum][dim]; j++) {
 				myfile << hist[dim][j] << " ";
 				if (hist[dim][j] > maxProb[dim]) {
 					maxProb[dim] = hist[dim][j];

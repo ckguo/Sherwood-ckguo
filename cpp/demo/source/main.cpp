@@ -144,7 +144,7 @@ int main(int argc, char* argv[])
     filenameStream << "/" << outputPath.Value << "/T" << parameters.NumberOfTrees << "D" << parameters.MaxDecisionLevels << outputIdentifier.Value;
     std::string filename = filenameStream.str();
     std::cout << filename << std::endl;
-    RegressionGaussianExampleNd::Visualize(*forest.get(), *trainingData.get(), *testingData.get(), filename);
+    RegressionGaussianExampleNd::Visualize(*forest.get(), *trainingData.get(), *testingData.get(), P.Value, filename);
 //	std::auto_ptr<Bitmap<PixelBgr> > result = RegressionExample::Visualize(*forest.get(), *trainingData.get(), Size(300,300), plotDilation);
 
   }

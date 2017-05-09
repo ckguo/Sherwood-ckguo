@@ -111,9 +111,11 @@ The above results are obtained by using a regression forest with 10 trees, a max
 [insert a three slice image comparing true bounding box with calculated bounding box]
 
 \subsection{Varying Parameters}
-To investigate the effect of varying the regression forest parameters, we decided to vary 4 different parameters and observe the percentage error while testing on patients 2 and 4. We mainly focused on testing with patient 2 and 4, because patient 2 is an example of a more normal-case scenario [help how to reword this] while patient 4 is a baby and therefore an example of a harder case to deal with.
-\subsubsection{Number of Trees}
 
+To investigate the effect of varying the regression forest parameters, we decided to vary 4 different parameters and observe the percentage error while testing on patients 2 and 4. The four different parameters are number of trees, given by $T$, maximum tree depth, given by $D$, number of features considered at each split node, given by $K$ and the sampling rate, given by $S$. We mainly focused on testing with patient 2 and 4, because patient 2 is an example of a more normal-case scenario [help how to reword this] while patient 4 is a baby and therefore an example of a harder case to deal with.
+\subsubsection{Number of Trees} We varied $T$ while keeping $D=8$, $K=10$, and $S=[9,9,9]$.
+
+[graph of percentage error vs. number of trees, for patient 2 and 4]
 \subsubsection{Maximum Tree Depth}
 \subsubsection{Number of Features Considered at Each Split Node}
 \subsubsection{Sampling Rate}

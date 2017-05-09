@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  8 MAY 2017 02:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  8 MAY 2017 03:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -983,10 +983,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 101--102
 
 [8.8 <./boundingboxes.png>]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <12> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 117.
-)
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 116.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [9.9])
 No file sample.bbl.
-[9.9]
+[10.10]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 64.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 64.
  (./sample.aux)
@@ -994,15 +997,11 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 64.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 64.
 Package rerunfilecheck Info: File `sample.out' has not changed.
 (rerunfilecheck)             Checksum: 92AE5CAC298BBB63B04A534EAB511759;1769.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 64.
  ) 
 Here is how much of TeX's memory you used:
- 16958 strings out of 493089
- 252353 string characters out of 6134842
+ 16959 strings out of 493089
+ 252360 string characters out of 6134842
  357152 words of memory out of 5000000
  19812 multiletter control sequences out of 15000+600000
  101538 words of font info for 256 fonts, out of 8000000 for 9000
@@ -1023,10 +1022,10 @@ pe1/urw/helvetic/uhvro8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/ur
 w/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/ut
 mr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/newtx/zxlr.pfb>
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/newtx/zxlri.pfb>
-Output written on sample.pdf (9 pages, 825371 bytes).
+Output written on sample.pdf (10 pages, 826805 bytes).
 PDF statistics:
- 186 PDF objects out of 1000 (max. 8388607)
- 153 compressed objects within 2 object streams
- 37 named destinations out of 1000 (max. 500000)
+ 190 PDF objects out of 1000 (max. 8388607)
+ 156 compressed objects within 2 object streams
+ 38 named destinations out of 1000 (max. 500000)
  22133 words of extra memory for PDF output out of 24883 (max. 10000000)
 

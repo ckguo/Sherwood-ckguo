@@ -2,6 +2,7 @@
 \usepackage{setspace}
 \usepackage{booktabs} % For formal tables
 \usepackage{times}
+\usepackage{wrapfig}
 \usepackage[outdir=./]{epstopdf}
 % Copyright
 \setcopyright{none}
@@ -40,7 +41,9 @@
 
 \begin{abstract}
 \doublespacing
-Congenital heart disease (CHD) affects many children around the world, which sometimes require extensive surgery planning. For doctors to be able to plan surgeries, it is helpful if scans of the heart are accurately labelled with the different substructures of the heart. This project aims to develop methods to localize internal structures in the heart as well as the heart itself in MRI scans of patients with congenital heart disease. Localization will be done by applying a regression forest to the MRI scans of the patient, to find the bounding boxes of the structures within the heart. A regression forest is a supervised machine learning model that is a collection of regression trees, which is described later in the technical approach. %\footnote{This is an abstract footnote}
+Congenital heart disease (CHD) affects many children around the world, which sometimes requires extensive surgery planning. For doctors to be able to plan surgeries, it is helpful if scans of the heart are accurately labelled with the different substructures of the heart. Some work has been done to address the issue of image segmentation in hearts with CHD [1], but these methods still require some user input and therefore are not fully automatic.
+
+In this work, we aim to develop methods to localize the heart in MRI scans of patients with congenital heart disease. We perform localization by applying a regression forest to the MRI scans of the patient, to find the bounding boxes of the structures within the heart. [STATE RESULTS HERE] %\footnote{This is an abstract footnote}
 \end{abstract}
 
 

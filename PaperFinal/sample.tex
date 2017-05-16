@@ -1,9 +1,8 @@
-\documentclass[sigconf,12pt]{acmart}
-\usepackage{setspace}
+\documentclass[sigconf,11pt]{acmart}
+
 \usepackage{booktabs} % For formal tables
 \usepackage{times}
-\usepackage{wrapfig}
-\usepackage[outdir=./]{epstopdf}
+
 % Copyright
 \setcopyright{none}
 
@@ -38,24 +37,18 @@
 }
 \email{polina@csail.mit.edu}
 
-
 \begin{abstract}
-\doublespacing
 Congenital heart disease (CHD) affects around 1\% of births in the USA [3], and in severe cases requires extensive surgery planning to treat. For doctors planning surgeries, it would be helpful if patient-specific 3D printed models were provided. This requires segmentation of the heart, which involves labelling each voxel of the image with what part of the heart it belongs to. A pre-processing step is to locate a bounding box of the heart. Traditionally, both the segmentation and the localization of the heart has been done manually, especially in patients with CHD.
 
-In this work, we aim to develop fully automatic methods to localize the heart in MRI scans of patients with congenital heart disease. We perform localization by applying a regression forest to the MRI scans of the patient, to find the bounding boxes of the heart. [STATE RESULTS HERE] %\footnote{This is an abstract footnote}
+In this work, we aim to develop fully automatic methods to localize the heart in MRI scans of patients with congenital heart disease. We perform localization by applying a regression forest to the MRI scans of the patient, to find the bounding boxes of the heart. [STATE RESULTS HERE]
 \end{abstract}
-
 
 \maketitle
 
-\begin{doublespacing}
 %If you would like to sections to be split across multiple files,
 %add them below in the same format as samplebody.
 \input{samplebody}
 
-
-\end{doublespacing}
 
 %If your citations are not being added properly, the solution may be in README
 \bibliographystyle{abbrv}

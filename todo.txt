@@ -1,0 +1,19 @@
+
+- commit to repo
+
+- (optimization) only add non-negligible Gaussian values, also ignore un-confident Gaussians
+- generate a heat map, as well as most likely value given the histograms
+- make visualization of where data points end up in the tree
+- make pictures of bounding box on images
+- make code parallel
+- try on different substructures
+- % offset from border? make sure it isn’t doing something dumb like that
+- can we do anything with the covariance matrix?
+- bigger dataset?? 20 vs 10
+- more parameter searching
+- better way of sampling the distribution?
+- making sure code is correct?? use fake examples and look at heat map
+- set up testing framework?
+- remove hardcoded filenames, add more command line arguments
+
+- given substructures, try segmentation

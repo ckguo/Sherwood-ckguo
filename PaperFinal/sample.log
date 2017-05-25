@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  16 MAY 2017 04:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  16 MAY 2017 15:50
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -909,23 +909,23 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [1.1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ]
-<decisiontree.png, id=60, 374.39874pt x 525.965pt>
+<decisiontree.png, id=67, 374.39874pt x 525.965pt>
 File: decisiontree.png Graphic file (type png)
  <use decisiontree.png>
 Package pdftex.def Info: decisiontree.png used on input line 17.
 (pdftex.def)             Requested size: 187.19891pt x 262.98184pt.
 
-Underfull \vbox (badness 1533) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-<regressionforest.png, id=62, 993.7125pt x 430.60875pt>
+<regressionforest.png, id=69, 993.7125pt x 430.60875pt>
 File: regressionforest.png Graphic file (type png)
 
 <use regressionforest.png>
 Package pdftex.def Info: regressionforest.png used on input line 24.
 (pdftex.def)             Requested size: 447.16649pt x 193.77214pt.
 
-<regressiontraining.png, id=63, 987.69pt x 396.48125pt>
+<regressiontraining.png, id=70, 987.69pt x 396.48125pt>
 File: regressiontraining.png Graphic file (type png)
 
 <use regressiontraining.png>
@@ -934,11 +934,14 @@ Package pdftex.def Info: regressiontraining.png used on input line 29.
  [2.2 <./decisiontree.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
  [3.3 <./regressionforest.png> <./regressiontraining.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-<boundingboxes.png, id=89, 378.6948pt x 164.7756pt>
+<boundingboxes.png, id=94, 378.6948pt x 164.7756pt>
 File: boundingboxes.png Graphic file (type png)
  <use boundingboxes.png>
 Package pdftex.def Info: boundingboxes.png used on input line 63.
@@ -950,49 +953,69 @@ LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
 (Font)              scaled to size 6.1pt on input line 67.
 
-[4.4]
-Underfull \hbox (badness 3668) in paragraph at lines 107--107
+[4.4] <feature.png, id=105, 510.90875pt x 436.63126pt>
+File: feature.png Graphic file (type png)
+ <use feature.png>
+Package pdftex.def Info: feature.png used on input line 79.
+(pdftex.def)             Requested size: 204.35988pt x 174.6494pt.
+
+Underfull \vbox (badness 2790) has occurred while \output is active []
+
+ [5.5 <./boundingboxes.png> <./feature.png>] <parameters.png, id=119, 963.6pt x
+ 542.025pt>
+File: parameters.png Graphic file (type png)
+
+<use parameters.png>
+Package pdftex.def Info: parameters.png used on input line 107.
+(pdftex.def)             Requested size: 674.51541pt x 379.4149pt.
+
+Overfull \hbox (168.22041pt too wide) in paragraph at lines 107--108
+ [][] 
+ []
+
+
+Underfull \hbox (badness 3668) in paragraph at lines 116--116
 []\T1/ptm/m/n/10.95 (+20) Voxel Er-ror
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 107--108
+Underfull \hbox (badness 10000) in paragraph at lines 116--117
 []\T1/ptm/m/n/10.95 (+20) Percentage
  []
 
-[5.5 <./boundingboxes.png>]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10.95> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 130.
-)
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 137.
+
+Underfull \vbox (badness 2680) has occurred while \output is active []
+
+ [6.6]
+Underfull \vbox (badness 6526) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7.7 <./parameters.png>])
 No file sample.bbl.
-[6.6]
+[8.8
+
+]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 57.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 57.
  (./sample.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 57.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 57.
-
-
-Package rerunfilecheck Warning: File `sample.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `sample.out':
-(rerunfilecheck)             Before: 8514E8F92842973170CC6868B50A1089;1784
-(rerunfilecheck)             After:  BB24E9821CCC6D14DE15D82B46A2F514;1980.
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+Package rerunfilecheck Info: File `sample.out' has not changed.
+(rerunfilecheck)             Checksum: AAFB2F6AE96AE35F3C8146C7A3B2843F;2111.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 57.
  ) 
 Here is how much of TeX's memory you used:
- 16901 strings out of 493089
- 251224 string characters out of 6134842
- 362638 words of memory out of 5000000
- 19737 multiletter control sequences out of 15000+600000
- 106609 words of font info for 281 fonts, out of 8000000 for 9000
+ 16924 strings out of 493089
+ 251517 string characters out of 6134842
+ 363613 words of memory out of 5000000
+ 19747 multiletter control sequences out of 15000+600000
+ 107116 words of font info for 286 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 60i,12n,94p,1567b,422s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,11n,94p,1567b,422s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/t
 exlive/2015/texmf-dist/fonts/enc/dvips/libertine/lbtn_ehpgim.enc}{/usr/local/te
 xlive/2015/texmf-dist/fonts/enc/dvips/newtx/libertinealt.enc}{/usr/local/texliv
@@ -1012,10 +1035,10 @@ etic/uhvro8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb
 8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></u
 sr/local/texlive/2015/texmf-dist/fonts/type1/public/newtx/zxlr.pfb></usr/local/
 texlive/2015/texmf-dist/fonts/type1/public/newtx/zxlri.pfb>
-Output written on sample.pdf (6 pages, 999040 bytes).
+Output written on sample.pdf (8 pages, 1583602 bytes).
 PDF statistics:
- 188 PDF objects out of 1000 (max. 8388607)
- 154 compressed objects within 2 object streams
- 35 named destinations out of 1000 (max. 500000)
- 23157 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 213 PDF objects out of 1000 (max. 8388607)
+ 173 compressed objects within 2 object streams
+ 39 named destinations out of 1000 (max. 500000)
+ 23183 words of extra memory for PDF output out of 24883 (max. 10000000)
 

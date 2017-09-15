@@ -13,6 +13,7 @@
 #include <cctype>
 #include <sstream>
 #include <fstream>
+#include "gnuplot-iostream.h"
 
 #include "PlotCanvas.h"
 #include "Graphics.h"
@@ -109,17 +110,20 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 						   {386, 386, 386, 386, 150, 150},
 						   {340, 340, 340, 340, 125, 125},
 						   {340, 340, 340, 340, 160, 160}};
-
+//		double visualization[340][340][178] = {{{0}}};
+		double test[340][178] = {{0}};
 		for (int i = 0; i< testingData.Count(); i++) {
-			if (i%50 == 0) {
-				std::cout << "i = " << i << std::endl;
-			}
 		    const float* datum = testingData.GetDataPoint(i);
+//		    visualization[int(datum[1])][int(datum[2])][int(datum[3])] = leafNodeIndices[0][i];
+		    test[int(datum[2])][int(datum[3])] = leafNodeIndices[0][i];
+			if (i%10 == 0) {
+				std::cout << "i = " << i << std::endl;
+				std::cout << leafNodeIndices[0][i] << std::endl;
+			}
 			for (int dim = 0; dim < 6; dim ++) {
 				for (int j = 0; j < dims[patNum][dim]; j++) {
 					for (int t = 0; t < forest.TreeCount(); t++) {
 						Node<BoxOffsetFeatureResponse, GaussianAggregatorNd> leafNodeCopy = forest.GetTree((t)).GetNode(leafNodeIndices[t][i]);
-
 						const GaussianAggregatorNd& leafStatistics = leafNodeCopy.TrainingDataStatistics;
 
 						hist[dim][j] += leafStatistics.GetPdf().GetMarginalProbability(dim, j-datum[dim/2+1]);
@@ -127,6 +131,9 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 				}
 			}
 		}
+		Gnuplot gp;
+		gp.send2d(test);
+		gp.flush();
 		std::ofstream myfile;
 		myfile.open(filename);
 		double maxProb[6];

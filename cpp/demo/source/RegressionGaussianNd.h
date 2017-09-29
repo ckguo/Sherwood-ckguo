@@ -130,10 +130,10 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 		for (int i = 0; i< testingData.Count(); i++) {
 		    const float* datum = testingData.GetDataPoint(i);
 //		    visualization[int(datum[1])][int(datum[2])][int(datum[3])] = leafNodeIndices[0][i];
-			if (i%10 == 0) {
+			if (i%1000 == 0) {
 				std::cout << "i = " << i << std::endl;
+				std::cout << leafNodeIndices[0][i] << std::endl;
 			}
-			std::cout << leafNodeIndices[0][i] << std::endl;
 			RegressionGaussianExampleNd::setValueAtIndex(int(datum[1]), int(datum[2]), int(datum[3]), leafNodeIndices[0][i], nim, stuff);
 			// reorganize for loops
 			// get only one std away from mean

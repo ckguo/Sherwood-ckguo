@@ -132,9 +132,9 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 //		    visualization[int(datum[1])][int(datum[2])][int(datum[3])] = leafNodeIndices[0][i];
 			if (i%10 == 0) {
 				std::cout << "i = " << i << std::endl;
-				std::cout << leafNodeIndices[0][i] << std::endl;
-				RegressionGaussianExampleNd::setValueAtIndex(int(datum[1]), int(datum[2]), int(datum[3]), leafNodeIndices[0][i], nim, stuff);
 			}
+			std::cout << leafNodeIndices[0][i] << std::endl;
+			RegressionGaussianExampleNd::setValueAtIndex(int(datum[1]), int(datum[2]), int(datum[3]), leafNodeIndices[0][i], nim, stuff);
 			// reorganize for loops
 			// get only one std away from mean
 			for (int dim = 0; dim < 6; dim ++) {

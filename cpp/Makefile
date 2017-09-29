@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-c -Wall -I lib -g -ggdb -std=c++11
 LDFLAGS=-I../../includes -I../../includes/nifticlib-2.0.0/include
-LIBFLAGS=-L../../includes/nifticlib-2.0.0/lib -lfslio -lnifticdf -lniftiio -lznz -lz -lboost_iostreams -lboost_system -lboost_filesystem
+LIBFLAGS=-L../../includes/nifticlib-2.0.0/lib -lfslio -lnifticdf -lniftiio -lznz -lz
 OUTDIR=bin/linux
 SOURCES=\
 demo/source/DataPointCollection.cpp\

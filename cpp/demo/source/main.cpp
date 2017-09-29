@@ -16,6 +16,7 @@
 
 #include "StatisticsAggregators.h"
 #include "RegressionGaussianNd.h"
+#include <nifti1_io.h>
 
 using namespace MicrosoftResearch::Cambridge::Sherwood;
 

@@ -13,7 +13,7 @@
 #include <cctype>
 #include <sstream>
 #include <fstream>
-#include "gnuplot-iostream.h"
+#include <nifti1_io.h>
 
 #include "PlotCanvas.h"
 #include "Graphics.h"
@@ -87,6 +87,14 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
       return forest;
     }
 
+    static void setValueAtIndex(int i, int j, int k, double value, nifti_image * nim, double * data) {
+	  int dimx = nim -> nx;
+	  int dimy = nim -> ny;
+	  int dimz = nim -> nz;
+	  data[i + dimx*j + dimx*dimy*k] = value;
+    }
+
+
     static void Visualize(
       Forest<BoxOffsetFeatureResponse, GaussianAggregatorNd>& forest,
       const DataPointCollection& trainingData,
@@ -110,30 +118,42 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 						   {386, 386, 386, 386, 150, 150},
 						   {340, 340, 340, 340, 125, 125},
 						   {340, 340, 340, 340, 160, 160}};
-//		double visualization[340][340][178] = {{{0}}};
-		double test[340][178] = {{0}};
+	    std::string read_filename = "../../dataset_full/training_axial_full_resampled_pat" + std::to_string(patNum) + ".nii.gz";
+		nifti_image * nim = nifti_image_read(read_filename.c_str(), 1);
+		std::cout << "hi1" << std::endl;
+	    std::string write_filename = "../../dataset_full/test" + std::to_string(patNum) + ".nii.gz";
+		nim -> fname = &write_filename[0];
+		std::cout << "hi" << std::endl;
+		double * stuff = new double[340*340*178];
+		std::cout << "stuff" << std::endl;
+
 		for (int i = 0; i< testingData.Count(); i++) {
 		    const float* datum = testingData.GetDataPoint(i);
 //		    visualization[int(datum[1])][int(datum[2])][int(datum[3])] = leafNodeIndices[0][i];
-		    test[int(datum[2])][int(datum[3])] = leafNodeIndices[0][i];
 			if (i%10 == 0) {
 				std::cout << "i = " << i << std::endl;
 				std::cout << leafNodeIndices[0][i] << std::endl;
+				RegressionGaussianExampleNd::setValueAtIndex(int(datum[1]), int(datum[2]), int(datum[3]), leafNodeIndices[0][i], nim, stuff);
 			}
+			// reorganize for loops
+			// get only one std away from mean
 			for (int dim = 0; dim < 6; dim ++) {
 				for (int j = 0; j < dims[patNum][dim]; j++) {
 					for (int t = 0; t < forest.TreeCount(); t++) {
 						Node<BoxOffsetFeatureResponse, GaussianAggregatorNd> leafNodeCopy = forest.GetTree((t)).GetNode(leafNodeIndices[t][i]);
 						const GaussianAggregatorNd& leafStatistics = leafNodeCopy.TrainingDataStatistics;
-
+						// compute probability first and then shift
 						hist[dim][j] += leafStatistics.GetPdf().GetMarginalProbability(dim, j-datum[dim/2+1]);
 					}
 				}
 			}
 		}
-		Gnuplot gp;
-		gp.send2d(test);
-		gp.flush();
+		nim -> data = stuff;
+		std::cout << "set" << std::endl;
+		nifti_image_write(nim);
+//		Gnuplot gp;
+//		gp.send2d(test);
+//		gp.flush();
 		std::ofstream myfile;
 		myfile.open(filename);
 		double maxProb[6];

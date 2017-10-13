@@ -120,16 +120,12 @@ namespace MicrosoftResearch { namespace Cambridge { namespace Sherwood
 						   {340, 340, 340, 340, 160, 160}};
 	    std::string read_filename = "../../dataset_full/training_axial_full_resampled_pat" + std::to_string(patNum) + ".nii.gz";
 		nifti_image * nim = nifti_image_read(read_filename.c_str(), 1);
-		std::cout << "hi1" << std::endl;
 	    std::string write_filename = "../../dataset_full/test" + std::to_string(patNum) + ".nii.gz";
 		nim -> fname = &write_filename[0];
-		std::cout << "hi" << std::endl;
-		double * stuff = new double[340*340*178];
-		std::cout << "stuff" << std::endl;
+		double * stuff = new double[dims[patNum][0]*dims[patNum][2]*dims[patNum][4]];
 
 		for (int i = 0; i< testingData.Count(); i++) {
 		    const float* datum = testingData.GetDataPoint(i);
-//		    visualization[int(datum[1])][int(datum[2])][int(datum[3])] = leafNodeIndices[0][i];
 			if (i%1000 == 0) {
 				std::cout << "i = " << i << std::endl;
 				std::cout << leafNodeIndices[0][i] << std::endl;
